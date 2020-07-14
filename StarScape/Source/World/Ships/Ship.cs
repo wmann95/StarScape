@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Tiles;
+using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Ships
 {
 	public abstract class Ship
 	{
 
-		public List<TileMap> shipTilemaps = new List<TileMap>();
+		public TileMap shipTilemap;
 
 		public bool isDirty { get; private set; }
 
@@ -20,7 +21,8 @@ namespace StarScape.Source.World.Ships
 
 		public Ship(Vector2 pos)
 		{
-			shipTilemaps.Add(CreateTileMap());
+			shipTilemap = CreateTileMap();
+			RemoveEmptyTiles();
 			Position = pos;
 		}
 
@@ -28,51 +30,79 @@ namespace StarScape.Source.World.Ships
 
 		public void LoadContent()
 		{
-			foreach(TileMap map in shipTilemaps)
-			{
-				map.LoadContent();
-			}
+			shipTilemap.LoadContent();
 		}
 
 		public void Draw(SpriteBatch batch)
 		{
-			foreach (TileMap map in shipTilemaps)
-			{
-				map.Draw(batch);
-			}
+			shipTilemap.Draw(batch);
 		}
 		
 		public virtual void Update(GameTime gameTime)
 		{
-			foreach (TileMap map in shipTilemaps)
-			{
-				map.Update(gameTime);
-			}
-
+			shipTilemap.Update(gameTime);
 		}
 
-		public Tile[][] BuildRoom(int xSize, int ySize)
+		public static void BuildRoom(in TileMap tileMap, int xPos, int yPos, int xSize, int ySize)
 		{
+			
 			Tile[][] buffer = new Tile[xSize][];
 			for(int x = 0; x < xSize; x++)
 			{
 				buffer[x] = new Tile[ySize];
 			}
+			//Console.WriteLine("buffer xSize = {0} || buffer ySize = {1}", (xSize), (ySize));
 
 			for (int i = 0; i < xSize; i++)
 			{
 				for(int j = 0; j < ySize; j++)
 				{
-					buffer[i][j] = new Tile(i, j);
+					buffer[i][j] = new Tile(i + xPos, j + yPos);
+					Tile.AddTop(new TopHull(), ref buffer[i][j]);
 
-					if(i == 0 || i == xSize - 1 || j == 0 || j == ySize - 1)
+					if (i == 0 || i == xSize - 1 || j == 0 || j == ySize - 1)
 					{
-					
+						Tile.AddTop(new TopWall(), ref buffer[i][j]);
+
 					}
 				}
 			}
 
-			return buffer;
+			Console.WriteLine("xPos = {0} || yPos = {1}", (xPos), (yPos));
+			tileMap.PlaceTiles(buffer, xPos, yPos);
+
+		}
+
+		private void RemoveEmptyTiles()
+		{
+			int lowestX = 0;
+			int lowestY = 0;
+			int highestX = shipTilemap.GetWidth();
+			int highestY = shipTilemap.GetHeight();
+
+			for (int i = 0; i < shipTilemap.GetWidth(); i++)
+			{
+
+				for (int j = 0; j < shipTilemap.GetHeight(); j++)
+				{
+					if (shipTilemap.getTile(i, j).tops.Count == 0)
+					{
+						shipTilemap.RemoveTile(i, j);
+					}
+				}
+			}
+
+			for (int i = 0; i < shipTilemap.GetWidth(); i++)
+			{
+				for (int j = 0; j < shipTilemap.GetHeight(); j++)
+				{
+					if (shipTilemap.getTile(i, j) != null && lowestX == 0) { lowestX = i; }
+					//if (shipTilemap.getTile(i, j) != null && lowestY == 0) { lowestX = i; }
+				}
+			}
+
+			Console.WriteLine(lowestX);
+
 		}
 	}
 }

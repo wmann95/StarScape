@@ -35,7 +35,7 @@ namespace StarScape
         {
 			resolutionIndependentRenderer = new ResolutionIndependentRenderer(this);
 			cam = new Camera2D(resolutionIndependentRenderer);
-			cam.Zoom = 1f;
+			cam.Zoom = 1/5f;
 
 			world = new World();
 

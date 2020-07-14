@@ -32,28 +32,37 @@ namespace StarScape.Source.World.Ships
 			int shipWidth = map.GetWidth();
 			int shipHeight = map.GetHeight();
 
-			for (int y = 0; y < shipHeight; y++)
-			{
-				for (int x = 0; x < shipWidth; x++)
-				{
+			Ship.BuildRoom(map, 1, 0, 4, shipHeight);
+			Ship.BuildRoom(map, 4, 3, 9, 4);
+			Ship.BuildRoom(map, 4, 0, 5, 4);
+			Ship.BuildRoom(map, 8, 0, 5, 4);
+			Ship.BuildRoom(map, 4, 6, 5, 4);
+			Ship.BuildRoom(map, 8, 6, 5, 4);
+			//Ship.BuildRoom(map, 4, 5, 10, 4);
+			//Ship.BuildRoom(map, 4, 3, 10, 4);
 
-					if (x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
-					{
-						map.InitializeTop(x, y, new TopHull());
-						map.InitializeTop(x, y, new TopWall());
-					}
-					else
-					{
-
-						map.InitializeTop(x, y, new TopHull());
-						TopFloor floor = new TopFloor();
-						//if (x == 1 && y == 1) floor.setDebug(true);
-
-						map.InitializeTop(x, y, floor);
-					}
-
-				}
-			}
+			//			for (int y = 0; y < shipHeight; y++)
+			//			{
+			//				for (int x = 0; x < shipWidth; x++)
+			//				{
+			//
+			//					if (x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
+			//					{
+			//						map.InitializeTop(x, y, new TopHull());
+			//						map.InitializeTop(x, y, new TopWall());
+			//					}
+			//					else
+			//					{
+			//
+			//						map.InitializeTop(x, y, new TopHull());
+			//						TopFloor floor = new TopFloor();
+			//						//if (x == 1 && y == 1) floor.setDebug(true);
+			//
+			//						map.InitializeTop(x, y, floor);
+			//					}
+			//
+			//				}
+			//			}
 		}
 		
 		long timer = 0;
@@ -66,7 +75,7 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime - timer;
 			//Debug.WriteLine(clock, true);
 
-			Position += new Vector2((float)(10f * gameTime.ElapsedGameTime.TotalSeconds), 0);
+			Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
 
 			if (Time.gameTime - clock >= 100)
 			{

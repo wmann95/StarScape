@@ -82,6 +82,11 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		public void RemoveTile(int x, int y)
+		{
+			tiles[x][y] = null;
+		}
+
 		public void Update(GameTime gameTime)
 		{
 			foreach (Tile[] tArray in tiles)
@@ -94,6 +99,33 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 		
+		public void PlaceTiles(Tile[][] inTiles, int xPos, int yPos)
+		{
+
+			//Console.WriteLine("TileMap xPos  = {0} || TileMap yPos = {1}", (xPos), (yPos));
+			//Console.WriteLine("TileMap width  = {0} || TileMap height = {1}", (tiles.Length), (tiles[0].Length));
+			//Console.WriteLine("TileMap inTiles.width  = {0} || TileMap inTiles.height = {1}", (inTiles.Length), (inTiles[0].Length));
+
+			for (int i = 0; i < inTiles.Length; i++)
+			{
+				for(int j = 0; j < inTiles[i].Length; j++)
+				{
+					if(i + xPos < 0 || i + xPos >= tiles.Length | j + yPos < 0 || j + yPos >= tiles[0].Length)
+					{
+						Debug.WriteLine("PlaceTiles Error: Input points out-of-bounds.", true);
+						continue;
+					}
+
+					
+					tiles[i + xPos][j + yPos] = inTiles[i][j];
+					tiles[i + xPos][j + yPos].parentTileMap = this;
+
+					//Console.WriteLine("TileMap Add Tile To x={0} || TileMap Add Tile To y={1} ||| ", (i + xPos), (j + yPos), tiles[i + xPos]);
+				}
+			}
+
+
+		}
 
 		public ref Tile GetNeighborOfTile(Tile tile, int neighbor)
 		{
