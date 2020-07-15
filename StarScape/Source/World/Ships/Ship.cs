@@ -95,6 +95,10 @@ namespace StarScape.Source.World.Ships
 						Tile.AddTop(new TopWall(), ref buffer[i][j]); //set the outside perimeter to be walls
 
 					}
+					else
+					{
+						Tile.AddTop(new TopFloor(), ref buffer[i][j]); //Tile isn't a perimeter tile, add a floor.
+					}
 				}
 			}
 

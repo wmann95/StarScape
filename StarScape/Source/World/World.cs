@@ -85,7 +85,7 @@ namespace StarScape.Source.World
 			}
 
 			//Camera drag movement.
-			if (Mouse.MouseButtonDown(Mouse.MouseButton.Right))
+			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))
 			{
 				mouseRightFlag = true;
 				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;// cam.Position; //// - cam.Position;
@@ -94,7 +94,7 @@ namespace StarScape.Source.World
 				Debug.WriteLine("Mouse Clicked Position: " + mouseRightClickedPosition);
 			}
 
-			if (Mouse.IsButtonPressed(Mouse.MouseButton.Right))
+			if (Mouse.IsButtonPressed(Mouse.MouseButton.Left))
 			{
 				if (mouseRightFlag)
 				{
@@ -102,7 +102,7 @@ namespace StarScape.Source.World
 				}
 			}
 
-			if (Mouse.MouseButtonUp(Mouse.MouseButton.Right))
+			if (Mouse.MouseButtonUp(Mouse.MouseButton.Left))
 			{
 				Debug.WriteLine("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
 				mouseRightFlag = false;

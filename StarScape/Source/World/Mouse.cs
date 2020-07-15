@@ -82,8 +82,8 @@ namespace StarScape.Source.World
 				}
 				case MouseButton.Right:
 				{
-					currStateFlag = currentState.MiddleButton.HasFlag(ButtonState.Pressed);
-					prevStateFlag = previousState.MiddleButton.HasFlag(ButtonState.Pressed);
+					currStateFlag = currentState.RightButton.HasFlag(ButtonState.Pressed);
+					prevStateFlag = previousState.RightButton.HasFlag(ButtonState.Pressed);
 					break;
 				}
 				default:
@@ -129,8 +129,8 @@ namespace StarScape.Source.World
 				}
 				case MouseButton.Right:
 				{
-					currStateFlag = currentState.MiddleButton.HasFlag(ButtonState.Pressed);
-					prevStateFlag = previousState.MiddleButton.HasFlag(ButtonState.Pressed);
+					currStateFlag = currentState.RightButton.HasFlag(ButtonState.Pressed);
+					prevStateFlag = previousState.RightButton.HasFlag(ButtonState.Pressed);
 					break;
 				}
 				default:
