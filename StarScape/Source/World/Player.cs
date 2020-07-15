@@ -10,9 +10,14 @@ using StarScape.Source.Rendering;
 
 namespace StarScape.Source.World
 {
+
+	/// <summary>
+	/// This class is a sort of placeholder. I just wanted something that I could use to test the keyboard inputs a while back.
+	/// </summary>
 	public class Player
 	{
 
+		
 		public int xPos { get; private set; }
 		public int yPos { get; private set; }
 		public int textureID { get; private set; }

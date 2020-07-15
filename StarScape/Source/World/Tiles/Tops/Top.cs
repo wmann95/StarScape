@@ -35,8 +35,11 @@ namespace StarScape.Source.World.Tiles.Tops
 
 		public virtual void LoadContent()
 		{
-			
+
 			textureID = LoadHelper.LoadTexture(texName);
+			int testID = LoadHelper.LoadTexture(texName);
+
+			Debug.WriteLine("Original TexID: " + textureID + ", duplicated test id: " + testID);
 		}
 
 

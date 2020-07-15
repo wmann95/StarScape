@@ -85,7 +85,7 @@ namespace StarScape.Source.World.Ships
 
 				for (int j = 0; j < shipTilemap.GetHeight(); j++)
 				{
-					if (shipTilemap.getTile(i, j).tops.Count == 0)
+					if (shipTilemap.GetTile(i, j).tops.Count == 0)
 					{
 						shipTilemap.RemoveTile(i, j);
 					}
@@ -96,8 +96,8 @@ namespace StarScape.Source.World.Ships
 			{
 				for (int j = 0; j < shipTilemap.GetHeight(); j++)
 				{
-					if (shipTilemap.getTile(i, j) != null && lowestX == 0) { lowestX = i; }
-					//if (shipTilemap.getTile(i, j) != null && lowestY == 0) { lowestX = i; }
+					if (shipTilemap.GetTile(i, j) != null && lowestX == 0) { lowestX = i; }
+					//if (shipTilemap.GetTile(i, j) != null && lowestY == 0) { lowestX = i; }
 				}
 			}
 

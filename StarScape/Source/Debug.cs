@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace StarScape.Source
 {
+
+	/// <summary>
+	/// As the name suggests, this class will be used for debugging purposes.
+	/// </summary>
 	public static class Debug
 	{
 

@@ -15,7 +15,7 @@ namespace StarScape.Source.World
 {
 	public class World
 	{
-
+		//List of all ships in the current world.
 		List<Ship> ships = new List<Ship>();
 
 		public World()
@@ -24,10 +24,12 @@ namespace StarScape.Source.World
 
 			//player = new Player(0,0);
 			//ships.Add(new ShipBartox(new Vector2(200f, 300f)));
-			ships.Add(new ShipCalax(new Vector2(200f, 100f)));
+			ships.Add(new ShipCalax(new Vector2(200f, 100f))); // make a new Calax ship at the specified point.
 		}
 		
-
+		/// <summary>
+		/// Go through all the ships and let them load.
+		/// </summary>
 		public void Load()
 		{
 			foreach (Ship ship in ships)
@@ -37,6 +39,10 @@ namespace StarScape.Source.World
 			}
 		}
 
+
+		/// <summary>
+		/// Go through all the ships and let them render.
+		/// </summary>
 		public void Draw(GameTime gameTime, SpriteBatch batch)
 		{
 			//map.Draw(batch);
@@ -49,14 +55,18 @@ namespace StarScape.Source.World
 		}
 
 		Vector2 mouseRightClickedPosition = new Vector2();
-		Vector2 cameraOriginalPosition = new Vector2();
 		bool mouseRightFlag = false;
 
+		/// <summary>
+		/// Go through all the ships and let them update.
+		/// </summary>
 		public void Update(ref Camera2D cam, GameTime gameTime)
 		{
 			//Mouse.GetState();
 			//Keyboard.GetState();
 
+
+			//Zoom logic
 			if (Keyboard.WasKeyTyped(Keys.Z))
 			{
 				if (Keyboard.IsKeyPressed(Keys.LeftShift))
@@ -74,7 +84,8 @@ namespace StarScape.Source.World
 				}
 			}
 
-			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))
+			//Camera drag movement.
+			if (Mouse.MouseButtonDown(Mouse.MouseButton.Right))
 			{
 				mouseRightFlag = true;
 				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;// cam.Position; //// - cam.Position;
@@ -83,7 +94,7 @@ namespace StarScape.Source.World
 				Debug.WriteLine("Mouse Clicked Position: " + mouseRightClickedPosition);
 			}
 
-			if (Mouse.IsButtonPressed(Mouse.MouseButton.Left))
+			if (Mouse.IsButtonPressed(Mouse.MouseButton.Right))
 			{
 				if (mouseRightFlag)
 				{
@@ -91,7 +102,7 @@ namespace StarScape.Source.World
 				}
 			}
 
-			if (Mouse.MouseButtonUp(Mouse.MouseButton.Left))
+			if (Mouse.MouseButtonUp(Mouse.MouseButton.Right))
 			{
 				Debug.WriteLine("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
 				mouseRightFlag = false;

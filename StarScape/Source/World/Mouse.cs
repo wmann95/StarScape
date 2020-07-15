@@ -3,14 +3,22 @@ using Microsoft.Xna.Framework.Input;
 
 namespace StarScape.Source.World
 {
+
+	/// <summary>
+	/// This class is a sort of *takeover* of the Microsoft.Xna.Framework.Input.Mouse class, which only has a few useful methods.
+	/// </summary>
 	public class Mouse
 	{
 
-		static MouseState previousState;
-		static MouseState currentState;
+		static MouseState previousState; //the state that was the currentstate prior to GetState() call.
+		static MouseState currentState; //the state as of the GetState() call
 
 		public enum MouseButton { Left, Middle, Right }
 
+		/// <summary>
+		/// Updates the previousState and currentState
+		/// </summary>
+		/// <returns></returns>
 		public static MouseState GetState()
 		{
 			previousState = currentState;
@@ -18,10 +26,15 @@ namespace StarScape.Source.World
 			return currentState;
 		}
 
+		/// <summary>
+		/// This is essentially the same as the prebuilt Mouse stuff. Just takes an enum which requests either the left, middle, or right mouse button, and interperets based on that.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
 		public static bool IsButtonPressed(MouseButton button)
 		{
 			GetState();
-			switch (button)
+			switch (button) //I chose to go with a switch statement instead of an if statement list because, from what I understand, switch statements are usually faster and more efficient.
 			{
 				case MouseButton.Left:
 				{
@@ -43,6 +56,11 @@ namespace StarScape.Source.World
 
 		}
 
+		/// <summary>
+		/// This method checks to see if the requested button is currently pressed and was NOT pressed in the prior state.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
 		public static bool MouseButtonDown(MouseButton button)
 		{
 			bool currStateFlag;
@@ -84,8 +102,14 @@ namespace StarScape.Source.World
 			return currStateFlag && !prevStateFlag; //currentState.IsKeyDown(key) && !previousState.IsKeyDown(key);
 		}
 
+		/// <summary>
+		/// This method checks to see if the requested button is currently not being pressed and the previous state IS being pressed.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
 		public static bool MouseButtonUp(MouseButton button)
 		{
+			//Flags that are true if the requested button was seen to be pressed in the specific state.
 			bool currStateFlag;
 			bool prevStateFlag;
 
@@ -115,14 +139,8 @@ namespace StarScape.Source.World
 					return false;
 				}
 			}
-
-			//bool currStateFlag = currentState.IsKeyDown(key);
-			//bool prevStateFlag = previousState.IsKeyDown(key);
-
-			//GetState();
-			//Console.WriteLine(currStateFlag + " : " + !prevStateFlag);
-
-			return !currStateFlag && prevStateFlag; //currentState.IsKeyDown(key) && !previousState.IsKeyDown(key);
+			
+			return !currStateFlag && prevStateFlag;
 		}
 
 	}

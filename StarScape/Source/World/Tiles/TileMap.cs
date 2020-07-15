@@ -11,33 +11,48 @@ using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles
 {
+	/// <summary>
+	/// This class is a sort of List<T>() specifically for tiles.
+	/// </summary>
 	public class TileMap
 	{
-		public Ship parentShip { get; private set; }
+		public Ship parentShip { get; private set; } //which ship is this tilemap attached to?
 
 		Tile[][] tiles;
 
+		/// <summary>
+		/// TileMap constructor that takes in two ints, the width and height, and the parent ship.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="ship"></param>
 		public TileMap(int x, int y, Ship ship)
 		{
 			parentShip = ship;
 
+			//Initializes the x-dimension of the tilemap and creates a y-dimension in each of those indexes.
 			tiles = new Tile[x][];
 			for (int i = 0; i < x; i++)
 			{
 				tiles[i] = new Tile[y];
 			}
 			
+			//Initializes all of the empty tiles of the new tilemap and set's their parent to this tilemap.
 			for(int i = 0; i < tiles.Length; i++)
 			{
 				for(int j = 0; j < tiles[i].Length; j++)
 				{
-					tiles[i][j] = new Tile(i , j);
-
-					tiles[i][j].parentTileMap = this;
+					this.SetTile(i, j, new Tile(i, j));
 				}
 			}
 		}
 
+		/// <summary>
+		/// Puts a top into a tile using the Tiles AddTop method.
+		/// </summary>
+		/// <param name="xPos"></param>
+		/// <param name="yPos"></param>
+		/// <param name="top"></param>
 		public virtual void InitializeTop(int xPos, int yPos, Top top)
 		{
 			Tile.AddTop(top, ref tiles[xPos][yPos]);
@@ -53,11 +68,26 @@ namespace StarScape.Source.World.Tiles
 			return tiles[0].Length;
 		}
 
-		public Tile getTile(int xPos, int yPos)
+		public Tile GetTile(int xPos, int yPos)
 		{
 			return tiles[xPos][yPos];
 		}
 
+		/// <summary>
+		/// Sets the tilemap coordinate to the new tile and sets that tile's parent to this tilemap.
+		/// </summary>
+		/// <param name="xPos"></param>
+		/// <param name="yPos"></param>
+		/// <param name="tile"></param>
+		private void SetTile(int xPos, int yPos, Tile tile)
+		{
+			tiles[xPos][yPos] = tile;
+			tiles[xPos][yPos].parentTileMap = this;
+		}
+
+		/// <summary>
+		/// This method is called during the load phase.
+		/// </summary>
 		public void LoadContent()
 		{
 			foreach(Tile[] tArray in tiles)
@@ -70,6 +100,9 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		/// <summary>
+		/// This method is called during the draw phase.
+		/// </summary>
 		public void Draw(SpriteBatch batch)
 		{
 			foreach (Tile[] tArray in tiles)
@@ -82,11 +115,10 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
-		public void RemoveTile(int x, int y)
-		{
-			tiles[x][y] = null;
-		}
-
+		/// <summary>
+		/// This method is called during the update loop.
+		/// </summary>
+		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
 			foreach (Tile[] tArray in tiles)
@@ -98,7 +130,23 @@ namespace StarScape.Source.World.Tiles
 				}
 			}
 		}
+
+		/// <summary>
+		/// set the given tile to null, which, for the intents and purposes of the air pressure and other mechanics, acts as a "space" tile. (removes any air rapidly.)
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public void RemoveTile(int x, int y)
+		{
+			tiles[x][y] = null;
+		}
 		
+		/// <summary>
+		/// essentially overwrites any of the tile slots on the tilemap via a new tile array and position of the top left-hand corner on the original tilemap.
+		/// </summary>
+		/// <param name="inTiles"></param>
+		/// <param name="xPos"></param>
+		/// <param name="yPos"></param>
 		public void PlaceTiles(Tile[][] inTiles, int xPos, int yPos)
 		{
 
@@ -116,9 +164,7 @@ namespace StarScape.Source.World.Tiles
 						continue;
 					}
 
-					
-					tiles[i + xPos][j + yPos] = inTiles[i][j];
-					tiles[i + xPos][j + yPos].parentTileMap = this;
+					this.SetTile(i + xPos, j + yPos, inTiles[i][j]);
 
 					//Console.WriteLine("TileMap Add Tile To x={0} || TileMap Add Tile To y={1} ||| ", (i + xPos), (j + yPos), tiles[i + xPos]);
 				}
@@ -127,14 +173,19 @@ namespace StarScape.Source.World.Tiles
 
 		}
 
+		/// <summary>
+		/// This is a method that takes in the tile you want to check neighbors for and an integer that tells which neighbor you want to get. an input of '0' means the tile right above, '1' is the tile one above and to the right, and continues on clockwise up until 7.
+		/// </summary>
+		/// <param name="tile"></param>
+		/// <param name="neighbor"></param>
+		/// <returns></returns>
 		public ref Tile GetNeighborOfTile(Tile tile, int neighbor)
 		{
 			int xPos = tile.xPos, yPos = tile.yPos;
 			int xOffset = 0, yOffset = 0;
-			int i = neighbor % 8;
-
+			int i = neighbor % 8; // makes it so that, even if the neighbor int is 8 or above, it will still return the proper neighbor.
 			
-
+			//switch statement of the neighbor int.
 			switch (i)
 			{
 				case 0:
@@ -189,6 +240,7 @@ namespace StarScape.Source.World.Tiles
 
 			//Console.WriteLine(xOffset + " : " + yOffset);
 
+			//if the tile checked is off of the tilemap bounds, take it to mean that the tile is out in space.
 			if (xPos + xOffset < 0 || xPos + xOffset >= tiles.Length)
 			{
 				return ref Tile.tileSpace;
