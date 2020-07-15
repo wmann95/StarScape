@@ -28,7 +28,7 @@ namespace StarScape.Source.Rendering
 		{
 			resIndRenderer = renderer;
 
-			zoom = 0.1f;
+			zoom = 4/5f;
 			rotation = 0f;
 			position = Vector2.Zero;
 		}

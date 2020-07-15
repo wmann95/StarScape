@@ -15,7 +15,7 @@ namespace StarScape.Source.World
 
 		public int xPos { get; private set; }
 		public int yPos { get; private set; }
-		public Texture2D texture { get; private set; }
+		public int textureID { get; private set; }
 
 		int speed = 1; //tiles per second
 		
@@ -49,7 +49,7 @@ namespace StarScape.Source.World
 
 		public void Load()
 		{
-			texture = LoadHelper.Load<Texture2D>("CharacterTest");
+			//textureID = LoadHelper.Load<Texture2D>("CharacterTest");
 		}
 	}
 }

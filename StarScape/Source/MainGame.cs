@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using StarScape.Source;
 using StarScape.Source.Rendering;
 using StarScape.Source.World;
+using Keyboard = StarScape.Source.World.Keyboard;
+using Mouse = StarScape.Source.World.Mouse;
 
 namespace StarScape
 {
@@ -20,9 +22,16 @@ namespace StarScape
 		ResolutionIndependentRenderer resolutionIndependentRenderer;
 		public static Camera2D cam;
 
+		public static readonly int screenWidth = 800;
+		public static readonly int screenHeight = 600;
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
+
+			graphics.PreferredBackBufferWidth = screenWidth;
+			graphics.PreferredBackBufferHeight = screenHeight;
+			graphics.ApplyChanges();
 			
             Content.RootDirectory = "Content";
 
@@ -35,7 +44,7 @@ namespace StarScape
         {
 			resolutionIndependentRenderer = new ResolutionIndependentRenderer(this);
 			cam = new Camera2D(resolutionIndependentRenderer);
-			cam.Zoom = 1/5f;
+			cam.Zoom = 4/5f;
 
 			world = new World();
 
@@ -68,13 +77,12 @@ namespace StarScape
 		
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Source.World.Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-
+			
 			Time.gameTime += gameTime.ElapsedGameTime.Milliseconds;
 
-			world.Update(gameTime);
+			world.Update(ref cam, gameTime);
 
             base.Update(gameTime);
         }

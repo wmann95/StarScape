@@ -68,6 +68,7 @@
     <Compile Include="Source\Rendering\ResolutionIndependentRenderer.cs" />
     <Compile Include="Source\Time.cs" />
     <Compile Include="Source\World\Keyboard.cs" />
+    <Compile Include="Source\World\Mouse.cs" />
     <Compile Include="Source\World\Player.cs" />
     <Compile Include="Source\World\Ships\Ship.cs" />
     <Compile Include="Source\World\Ships\ShipBartox.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Source\World\Tiles\Tops\Attributes\AttAirtight.cs" />
     <Compile Include="Source\World\Tiles\Tops\Attributes\Attribute.cs" />
     <Compile Include="Source\World\Tiles\Tops\Top.cs" />
+    <Compile Include="Source\World\Tiles\Tops\TopDoor.cs" />
     <Compile Include="Source\World\Tiles\Tops\TopFloor.cs" />
     <Compile Include="Source\World\Tiles\Tops\TopHull.cs" />
     <Compile Include="Source\World\Tiles\Tops\TopWall.cs" />

@@ -9,6 +9,8 @@ namespace StarScape.Source.World.Tiles.Tops.Attributes
 {
 	public class AttAirtight : Attribute
 	{
+
+
 		public override void Update(GameTime gameTime){}
 	}
 }

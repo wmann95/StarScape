@@ -48,8 +48,54 @@ namespace StarScape.Source.World
 			//batch.Draw(player.texture, new Vector2(player.xPos * 64, player.yPos * 64), Color.White);
 		}
 
-		public void Update(GameTime gameTime)
+		Vector2 mouseRightClickedPosition = new Vector2();
+		Vector2 cameraOriginalPosition = new Vector2();
+		bool mouseRightFlag = false;
+
+		public void Update(ref Camera2D cam, GameTime gameTime)
 		{
+			//Mouse.GetState();
+			//Keyboard.GetState();
+
+			if (Keyboard.WasKeyTyped(Keys.Z))
+			{
+				if (Keyboard.IsKeyPressed(Keys.LeftShift))
+				{
+					cam.Zoom *= 2;
+					cam.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom / 2));
+				}
+				else
+				{
+					cam.Zoom /= 2;
+					cam.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom * 2));
+				}
+			}
+
+			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))
+			{
+				mouseRightFlag = true;
+				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;// cam.Position; //// - cam.Position;
+				//cameraOriginalPosition = cam.Position;
+
+				Debug.WriteLine("Mouse Clicked Position: " + mouseRightClickedPosition);
+			}
+
+			if (Mouse.IsButtonPressed(Mouse.MouseButton.Left))
+			{
+				if (mouseRightFlag)
+				{
+					cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);// - cameraOriginalPosition;
+				}
+			}
+
+			if (Mouse.MouseButtonUp(Mouse.MouseButton.Left))
+			{
+				Debug.WriteLine("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
+				mouseRightFlag = false;
+				//cameraOriginalPosition = cam.Position;
+				cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
+				
+			}
 
 			//player.Update(gameTime);
 			foreach (Ship ship in ships)

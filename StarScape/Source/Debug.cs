@@ -14,5 +14,10 @@ namespace StarScape.Source
 			if (flag) Console.WriteLine(t.ToString());
 		}
 
+		public static void WriteLine<T>(T t)
+		{
+			Console.WriteLine(t.ToString());
+		}
+
 	}
 }

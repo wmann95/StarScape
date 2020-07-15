@@ -75,7 +75,7 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime - timer;
 			//Debug.WriteLine(clock, true);
 
-			Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
+			//Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
 
 			if (Time.gameTime - clock >= 100)
 			{

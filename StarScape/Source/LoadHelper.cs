@@ -10,11 +10,22 @@ namespace StarScape.Source
 	public static class LoadHelper
 	{
 
-		public static T Load<T>(String name)
+		static Dictionary<int, Texture2D> textures = new Dictionary<int, Texture2D>();
+		static int textureIndex = 0;
+
+		public static int LoadTexture(string name)
 		{
+
+			Texture2D t = MainGame.contentManager.Load<Texture2D>(name);
 			
-			T t = MainGame.contentManager.Load<T>(name);
-			return t;
+			textures.Add(textureIndex, t);
+
+			return textureIndex++;
+		}
+
+		public static Texture2D GetTexture(int loadID)
+		{
+			return textures[loadID];
 		}
 
 	}

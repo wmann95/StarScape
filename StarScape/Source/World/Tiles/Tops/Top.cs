@@ -17,7 +17,7 @@ namespace StarScape.Source.World.Tiles.Tops
 
 		List<Attribute> attributes = new List<Attribute>();
 
-		public Texture2D texture { get; private set; }
+		public int textureID { get; private set; }
 		//public bool debugRenderFlag { get; set; }
 		public string TopName { get; protected set; }
 
@@ -26,22 +26,19 @@ namespace StarScape.Source.World.Tiles.Tops
 		public Top(string tex)
 		{
 			TopName = texName = tex;
-			
 		}
 
-		public void LoadContent()
+		public Top()
 		{
-			
-			texture = LoadHelper.Load<Texture2D>(texName);
+
 		}
 
-		public void AddAttribute(Attribute att)
+		public virtual void LoadContent()
 		{
-			if (hasAttribute(att)) return;
 			
-			attributes.Add(att);
-			att.parentTop = this;
+			textureID = LoadHelper.LoadTexture(texName);
 		}
+
 
 		public virtual void Update(GameTime gameTime)
 		{
@@ -54,7 +51,7 @@ namespace StarScape.Source.World.Tiles.Tops
 
 		public virtual void Draw(SpriteBatch batch)
 		{
-			batch.Draw(texture, (new Vector2(parentTile.xPos, parentTile.yPos) * 64) + parentTile.parentTileMap.parentShip.Position, Color.White);
+			batch.Draw(LoadHelper.GetTexture(textureID), (new Vector2(parentTile.xPos, parentTile.yPos) * 64) + parentTile.parentTileMap.parentShip.Position, Color.White);
 		}
 
 		public bool hasAttribute<T>()
@@ -75,6 +72,14 @@ namespace StarScape.Source.World.Tiles.Tops
 			}
 
 			return false;
+		}
+
+		public void AddAttribute(Attribute att)
+		{
+			if (hasAttribute(att)) return;
+
+			attributes.Add(att);
+			att.parentTop = this;
 		}
 
 		public Attribute getAttribute<T>()

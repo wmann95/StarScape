@@ -72,7 +72,7 @@ namespace StarScape.Source.World.Tiles.Tops
 			}
 			
 
-			batch.Draw(texture, new Vector2(parentTile.xPos, parentTile.yPos) * 64 + parentTile.parentTileMap.parentShip.Position, color);
+			batch.Draw(LoadHelper.GetTexture(textureID), new Vector2(parentTile.xPos, parentTile.yPos) * 64 + parentTile.parentTileMap.parentShip.Position, color);
 
 		}
 
