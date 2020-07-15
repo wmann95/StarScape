@@ -53,9 +53,19 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="xPos"></param>
 		/// <param name="yPos"></param>
 		/// <param name="top"></param>
-		public virtual void InitializeTop(int xPos, int yPos, Top top)
+		public virtual void AddTop(int xPos, int yPos, Top top)
 		{
 			Tile.AddTop(top, ref tiles[xPos][yPos]);
+		}
+
+		public virtual void RemoveTop<T>(int xPos, int yPos)
+		{
+			//List<Top> tops = tiles[xPos][yPos].tops;
+			
+		}
+		public virtual void RemoveTop(int xPos, int yPos, Top top)
+		{
+
 		}
 
 		public int GetWidth()

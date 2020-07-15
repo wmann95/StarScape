@@ -55,17 +55,17 @@ namespace StarScape.Source.World.Ships
 			//
 			//					if (x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
 			//					{
-			//						map.InitializeTop(x, y, new TopHull());
-			//						map.InitializeTop(x, y, new TopWall());
+			//						map.AddTop(x, y, new TopHull());
+			//						map.AddTop(x, y, new TopWall());
 			//					}
 			//					else
 			//					{
 			//
-			//						map.InitializeTop(x, y, new TopHull());
+			//						map.AddTop(x, y, new TopHull());
 			//						TopFloor floor = new TopFloor();
 			//						//if (x == 1 && y == 1) floor.setDebug(true);
 			//
-			//						map.InitializeTop(x, y, floor);
+			//						map.AddTop(x, y, floor);
 			//					}
 			//
 			//				}
@@ -82,7 +82,7 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime - timer;
 			//Debug.WriteLine(clock, true);
 
-			//Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
+			Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
 
 			if (Time.gameTime - clock >= 100)
 			{

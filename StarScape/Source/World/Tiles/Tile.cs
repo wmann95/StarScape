@@ -21,7 +21,7 @@ namespace StarScape.Source.World.Tiles
 
 		public TileMap parentTileMap { get; internal set; }
 
-		//the first index should be the bottom, so usually a hull if it's on a ship
+		//the first index should be the bottom, so usually a hull if it's on a ship.
 		public List<Top> tops { get; private set; }
 
 		public int xPos { get; set; }//{ get; private set; }
@@ -85,8 +85,19 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="tile"></param>
 		public static void AddTop(Top top, ref Tile tile)
 		{
+			if(top is TopWall)
+			{
+
+			}
+			
 			tile.tops.Add(top);
 			top.parentTile = tile;
+		}
+
+		public static void RemoveTop(Top top, ref Tile tile)
+		{
+			if(tile.tops.Contains(top))	tile.tops.Remove(top);
+
 		}
 
 		/// <summary>

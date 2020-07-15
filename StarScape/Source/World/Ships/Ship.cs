@@ -108,6 +108,44 @@ namespace StarScape.Source.World.Ships
 		}
 
 		/// <summary>
+		/// WIP method for adding doors.
+		/// </summary>
+		/// <param name="tileMap"></param>
+		/// <param name="xPos"></param>
+		/// <param name="yPos"></param>
+		/// <param name="rotation"></param>
+		public static void BuildDoor(in TileMap tileMap, int xPos, int yPos, int rotation)
+		{
+			List<Top> tops = tileMap.GetTile(xPos, yPos).tops;
+			bool hullFlag = false;
+			bool wallFlag = false;
+
+			foreach(Top t in tops)
+			{
+				if(t is TopHull)
+				{
+					hullFlag = true;
+				}
+				if (t is TopWall)
+				{
+					wallFlag = true;
+				}
+
+			}
+
+			if (wallFlag)
+			{
+				//tileMap.GetTile(xPos, yPos).tops.Remove<TopWall>();
+			}
+
+			if (hullFlag)
+			{
+				tileMap.AddTop(xPos, yPos, new TopDoor());
+			}
+
+		}
+
+		/// <summary>
 		/// This is currently a WIP method that will optimize the ships tilemap to be fitted with no empty tiles outside of the smallest box to cover all non-null tiles in the tilemap.
 		/// </summary>
 		private void RemoveEmptyTiles()

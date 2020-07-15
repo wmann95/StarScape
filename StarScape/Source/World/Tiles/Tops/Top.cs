@@ -16,12 +16,14 @@ namespace StarScape.Source.World.Tiles.Tops
 	public abstract class Top
 	{
 		public Tile parentTile { get; internal set; }
-
+		
 		List<Attribute> attributes = new List<Attribute>();
 
 		public int textureID { get; private set; } // an int that represents the index in the LoadHelper.textures list that allows you to retrieve the wanted texture.
 		//public bool debugRenderFlag { get; set; }
 		public string TopName { get; protected set; }
+
+		private static int MaxTopCountPerTile { get; set; }
 
 		string texName;
 		
@@ -40,6 +42,15 @@ namespace StarScape.Source.World.Tiles.Tops
 		public Top()
 		{
 
+		}
+
+		/// <summary>
+		/// Returns the total amount of this top that can fit in a given tile
+		/// </summary>
+		/// <returns></returns>
+		public static int GetMaxCountPerTile()
+		{
+			return MaxTopCountPerTile;
 		}
 
 		/// <summary>

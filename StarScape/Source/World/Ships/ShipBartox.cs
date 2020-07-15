@@ -23,7 +23,7 @@ namespace StarScape.Source.World.Ships
 
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(5, 5, this);
+			TileMap temp = new TileMap(1, 1, this);
 
 			BuildTops(temp);
 
@@ -42,17 +42,17 @@ namespace StarScape.Source.World.Ships
 
 					if(x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
 					{
-						map.InitializeTop(x, y, new TopHull());
-						map.InitializeTop(x, y, new TopWall());
+						map.AddTop(x, y, new TopHull());
+						map.AddTop(x, y, new TopWall());
 					}
 					else
 					{
 
-						map.InitializeTop(x, y, new TopHull());
+						map.AddTop(x, y, new TopHull());
 						TopFloor floor = new TopFloor();
 						//if (x == 1 && y == 1) floor.setDebug(true);
 
-						map.InitializeTop(x, y, floor);
+						map.AddTop(x, y, floor);
 					}
 
 				}
