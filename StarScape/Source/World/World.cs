@@ -61,18 +61,13 @@ namespace StarScape.Source.World
 			{
 				if (Keyboard.IsKeyPressed(Keys.LeftShift))
 				{
-					
-						cam.Zoom *= 2;
-						cam.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom / 2));
-					
+					cam.Zoom *= 2;
+					cam.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom / 2));
 				}
 				else
 				{
-					if (cam.Zoom > .1f)
-					{
-						cam.Zoom /= 2;
-						cam.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom * 2));
-					}
+					cam.Zoom /= 2;
+					cam.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom * 2));
 				}
 			}
 
