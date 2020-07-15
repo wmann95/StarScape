@@ -10,6 +10,9 @@ using StarScape.Source.World.Tiles.Tops.Attributes;
 
 namespace StarScape.Source.World.Ships
 {
+	/// <summary>
+	/// This is the current ship I'm testing stuff about ship generation on as well as ship systems.
+	/// </summary>
 	public class ShipCalax : Ship
 	{
 		
@@ -27,6 +30,10 @@ namespace StarScape.Source.World.Ships
 			return temp;
 		}
 
+		/// <summary>
+		/// This is where the ship generation will be held. A decent example of how a predetermined ship can be built using the BuildRoom tool.
+		/// </summary>
+		/// <param name="map"></param>
 		private void BuildTops(in TileMap map)
 		{
 			int shipWidth = map.GetWidth();

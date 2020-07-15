@@ -52,7 +52,7 @@ namespace StarScape.Source.World.Tiles.Tops.Attributes
 					
 					foreach(Top t in tile.tops)
 					{
-						if (t.hasAttribute<AttAirPressure>() || tile == Tile.tileSpace)
+						if (t.HasAttribute<AttAirPressure>() || tile == Tile.tileSpace)
 						{
 							AttAirPressure aap = ((AttAirPressure)t.getAttribute<AttAirPressure>());
 							if ( aap != null)

@@ -10,9 +10,14 @@ using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles
 {
+	/// <summary>
+	/// This class is essentially an interface between the tilemap and the tops in this tile. 
+	/// </summary>
 	public class Tile
 	{
-		public static Tile tileSpace = new Tile(-1, -1);
+		public static Tile tileSpace = new Tile(-1, -1); //there should never be a tile that has any internal coordinates of less than 0, therefore this can
+														 //be used as a checker kind of like checking if an object is null. If the current tile is tileSpace, do
+														 //stuff that would be done if it were actually space.
 
 		public TileMap parentTileMap { get; internal set; }
 
@@ -29,8 +34,11 @@ namespace StarScape.Source.World.Tiles
 			tops = new List<Top>();
 		}
 		
-		public void LoadFromFile() { }
+		public void LoadFromFile() { } // Placeholder for getting tile information from a save file or what have you. Haven't gotten into that yet, hence the emptyness.
 
+		/// <summary>
+		/// This method is called during the load phase.
+		/// </summary>
 		public void LoadContent()
 		{
 
@@ -41,6 +49,10 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		/// <summary>
+		/// This method is called during the draw phase.
+		/// </summary>
+		/// <param name="batch"></param>
 		public void Draw(SpriteBatch batch)
 		{
 			foreach (Top t in tops)
@@ -51,6 +63,10 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		/// <summary>
+		/// this method is called during the update loop.
+		/// </summary>
+		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
 			foreach(Top t in tops)
@@ -62,12 +78,22 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		/// <summary>
+		/// This method adds any given top to any given tile, hence the static keyword.
+		/// </summary>
+		/// <param name="top"></param>
+		/// <param name="tile"></param>
 		public static void AddTop(Top top, ref Tile tile)
 		{
 			tile.tops.Add(top);
 			top.parentTile = tile;
 		}
 
+		/// <summary>
+		/// Gives an easier method to get a top via index instead of having to type out tile.tops.ElementAt(i). That just becomes tile.GetTop(i).
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
 		public Top GetTop(int i)
 		{
 			return tops.ElementAt(i);

@@ -10,6 +10,9 @@ using StarScape.Source.World.Tiles.Tops.Attributes;
 
 namespace StarScape.Source.World.Ships
 {
+	/// <summary>
+	/// This is meant to be a small ship that I used when making the first attempts at air. This is, in essence, a deprecated class.
+	/// </summary>
 	public class ShipBartox : Ship
 	{
 

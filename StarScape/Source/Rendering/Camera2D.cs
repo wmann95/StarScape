@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace StarScape.Source.Rendering
 {
+	/// <summary>
+	/// Magic
+	/// </summary>
 	public class Camera2D
 	{
 		private float zoom;
@@ -84,6 +87,10 @@ namespace StarScape.Source.Rendering
 			Position = pos;
 		}
 
+		/// <summary>
+		/// This method tells the camera that something about the graphics device has been changed and the camera needs to be updated. Things like resolution changes should subsequently call this method.
+		/// </summary>
+		/// <returns></returns>
 		public Matrix GetViewTransformationMatrix()
 		{
 			if (isViewTransformationDirty)
@@ -116,6 +123,9 @@ namespace StarScape.Source.Rendering
 			return transform;
 		}
 
+		/// <summary>
+		/// A long winded way to say "Update the camera"
+		/// </summary>
 		public void RecalculateTransformationMatrices()
 		{
 			isViewTransformationDirty = true;

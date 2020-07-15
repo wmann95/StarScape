@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace StarScape.Source.Rendering
 {
+	/// <summary>
+	/// Magic... Like actually magic. I don't understand much of anything in here, at least on the matrix math side of things.
+	/// </summary>
 	public class ResolutionIndependentRenderer
 	{
 		private readonly MainGame game;

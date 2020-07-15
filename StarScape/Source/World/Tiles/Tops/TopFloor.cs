@@ -12,13 +12,16 @@ using StarScape.Source.World.Tiles.Tops.Attributes;
 
 namespace StarScape.Source.World.Tiles.Tops
 {
+	/// <summary>
+	/// This class is the top that adds a floor tile to the rooms hull.
+	/// </summary>
 	public class TopFloor : Top
 	{
 
 		public TopFloor() : base("FloorTile1")
 		{
 
-			this.AddAttribute(new AttAirPressure());
+			this.AddAttribute(new AttAirPressure()); // This is just a test thing... floors won't come with added air pressure on installing.
 			
 		}
 		
@@ -50,6 +53,10 @@ namespace StarScape.Source.World.Tiles.Tops
 
 		}
 
+		/// <summary>
+		/// This is where I added some logic to tint the floor color based on the air pressure on that tile. Red is less than atmospheric pressure, blue is greater than atmospheric pressure.
+		/// </summary>
+		/// <param name="batch"></param>
 		public override void Draw(SpriteBatch batch)
 		{
 			//base.Draw(batch);
@@ -76,6 +83,10 @@ namespace StarScape.Source.World.Tiles.Tops
 
 		}
 
+		/// <summary>
+		/// This is when I got the idea to start the Debug class.
+		/// </summary>
+		/// <param name="v"></param>
 		public void setDebug(bool v)
 		{
 			((AttAirPressure)getAttribute<AttAirPressure>()).debugFlag = true;
