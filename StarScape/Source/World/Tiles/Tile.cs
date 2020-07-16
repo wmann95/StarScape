@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using StarScape.Source.World.Tiles.Atmospherics;
 using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles
@@ -15,23 +16,27 @@ namespace StarScape.Source.World.Tiles
 	/// </summary>
 	public class Tile
 	{
-		public static Tile tileSpace = new Tile(-1, -1); //there should never be a tile that has any internal coordinates of less than 0, therefore this can
-														 //be used as a checker kind of like checking if an object is null. If the current tile is tileSpace, do
-														 //stuff that would be done if it were actually space.
+		public Atmosphere atmosphere;
+		public int atmosphereTexID;
 
 		public TileMap parentTileMap { get; internal set; }
-
-		//the first index should be the bottom, so usually a hull if it's on a ship.
-		public List<Top> tops { get; private set; }
-
+		public List<Top> tops { get; private set; } //the first index should be the bottom, so usually a hull if it's on a ship.
+		
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
 
+		//there should never be a tile that has any internal coordinates of less than 0, therefore this can
+		//be used as a checker kind of like checking if an object is null. If the current tile is tileSpace, do
+		//stuff that would be done if it were actually space.
+		public static Tile tileSpace = new TileSpace();
+		
 		public Tile(int x, int y)
 		{
 			this.xPos = x;
 			this.yPos = y;
 			tops = new List<Top>();
+
+			atmosphere = new Atmosphere(this);
 		}
 		
 		public void LoadFromFile() { } // Placeholder for getting tile information from a save file or what have you. Haven't gotten into that yet, hence the emptyness.
@@ -41,12 +46,13 @@ namespace StarScape.Source.World.Tiles
 		/// </summary>
 		public void LoadContent()
 		{
-
 			foreach(Top t in tops)
 			{
 				if (t == null) continue;
 				t.LoadContent();
 			}
+			
+			atmosphereTexID = LoadHelper.LoadTexture("AtmosphereOverlay");
 		}
 
 		/// <summary>
@@ -61,6 +67,27 @@ namespace StarScape.Source.World.Tiles
 				//if (t.TopName == "HullTile1") continue;
 				t.Draw(batch);
 			}
+
+			if (true) //if(showAtmospherics == true) at some point.
+			{
+				float pressureColor = atmosphere.airPressure / Atmosphere.AtmosphericPressure;
+
+				Color color;// = new Color(255, 255, 255);
+				float opacity = 0f;
+				//Console.WriteLine(pressureColor);
+
+				if (pressureColor > 1)
+				{
+					color = new Color(1 / pressureColor, 1 / pressureColor, 1f);
+				}
+				else
+				{
+					color = new Color(1f, pressureColor, pressureColor);
+				}
+
+				batch.Draw(LoadHelper.GetTexture(atmosphereTexID), new Vector2(xPos, yPos) * 64 + parentTileMap.parentShip.Position, color * .5f);
+
+			}
 		}
 
 		/// <summary>
@@ -69,6 +96,8 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
+			atmosphere.Update(gameTime);
+
 			foreach(Top t in tops)
 			{
 				if (t == null) continue;
@@ -76,6 +105,7 @@ namespace StarScape.Source.World.Tiles
 				//if (t is TopFloor) ((TopFloor)t).Update(gameTime);
 				t.Update(gameTime);
 			}
+			
 		}
 
 		/// <summary>

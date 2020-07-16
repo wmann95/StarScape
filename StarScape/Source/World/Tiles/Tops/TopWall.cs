@@ -12,9 +12,14 @@ namespace StarScape.Source.World.Tiles.Tops
 	/// </summary>
 	public class TopWall : Top
 	{
-		public TopWall() : base("WallTile1")
+		public TopWall()
 		{
 			AddAttribute(new AttAirtight());
+		}
+
+		public override string GetTexture()
+		{
+			return "WallTile1";
 		}
 	}
 }

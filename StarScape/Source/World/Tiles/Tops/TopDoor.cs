@@ -18,9 +18,14 @@ namespace StarScape.Source.World.Tiles.Tops
 		//Deprecated: When I wrote this, I realized I could do this in the LoadHelper class to help optimize loading, and this is now obsolete.
 		//Dictionary<int, Texture2D> doorTextures = new Dictionary<int, Texture2D>();
 
-		public TopDoor() : base()
+		public TopDoor()
 		{
 			
+		}
+		
+		public override string GetTexture()
+		{
+			return "TopFloor1";
 		}
 
 		public override void Draw(SpriteBatch batch)

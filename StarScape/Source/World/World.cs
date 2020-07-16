@@ -23,7 +23,7 @@ namespace StarScape.Source.World
 			//map = new TileMap();
 
 			//player = new Player(0,0);
-			ships.Add(new ShipBartox(new Vector2(0, 0)));
+			//ships.Add(new ShipBartox(new Vector2(0, 0)));
 			ships.Add(new ShipCalax(new Vector2(200f, 100f))); // make a new Calax ship at the specified point.
 		}
 		

@@ -15,9 +15,17 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TopHull : Top
 	{
 
-		public TopHull() : base("HullTile1")
-		{}
-		
+		public TopHull()
+		{
+			//this.AddAttribute(new AttAirPressure()); // This is just a test thing... hulls won't come with added air pressure on installing.
+		}
+
+
+		public override string GetTexture()
+		{
+			return "HullTile1";
+		}
+
 		public override void Update(GameTime gameTime)
 		{}
 	}

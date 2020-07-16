@@ -23,25 +23,22 @@ namespace StarScape.Source.World.Tiles.Tops
 		//public bool debugRenderFlag { get; set; }
 		public string TopName { get; protected set; }
 
-		private static int MaxTopCountPerTile { get; set; }
+		protected static int MaxTopCountPerTile { get; set; }
 
 		string texName;
 		
 		/// <summary>
-		/// This constructor takes in a string and will store it for when the LoadContent method is called.
+		/// This constructor calls the abstract method GetTexture and will store it for when the LoadContent method is called.
 		/// </summary>
 		/// <param name="tex"></param>
-		public Top(string tex)
-		{
-			TopName = texName = tex;
-		}
-
-		/// <summary>
-		/// Emtpy constructor for when I need to make a new top that needs more fine tuning, like the TopDoor for instance.
-		/// </summary>
 		public Top()
 		{
+			TopName = texName = GetTexture();
+		}
 
+		public virtual string GetTexture()
+		{
+			return "UndefinedTexture";
 		}
 
 		/// <summary>

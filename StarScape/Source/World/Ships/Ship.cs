@@ -29,7 +29,7 @@ namespace StarScape.Source.World.Ships
 		public Ship(Vector2 pos)
 		{
 			shipTilemap = CreateTileMap();
-			//RemoveEmptyTiles();
+			RemoveEmptyTiles();
 			Position = pos;
 		}
 
@@ -160,6 +160,8 @@ namespace StarScape.Source.World.Ships
 
 				for (int j = 0; j < shipTilemap.GetHeight(); j++)
 				{
+					if (shipTilemap.GetTile(i, j) == null) continue;
+
 					if (shipTilemap.GetTile(i, j).tops.Count == 0)
 					{
 						shipTilemap.RemoveTile(i, j);

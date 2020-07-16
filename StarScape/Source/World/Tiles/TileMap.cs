@@ -148,6 +148,16 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="y"></param>
 		public void RemoveTile(int x, int y)
 		{
+			if (tiles[x][y] == null) return;
+
+			for(int i = 0; i < 8; i++)
+			{
+				Console.WriteLine("xPos: " + x + ", yPos: " + y + ", neighborID: " + i);
+
+				if (GetNeighborOfTile(tiles[x][y], i) == null) continue;
+				GetNeighborOfTile(tiles[x][y], i).atmosphere.setDirty();
+			}
+
 			tiles[x][y] = null;
 		}
 		
@@ -191,6 +201,8 @@ namespace StarScape.Source.World.Tiles
 		/// <returns></returns>
 		public ref Tile GetNeighborOfTile(Tile tile, int neighbor)
 		{
+			//Console.WriteLine(tile.xPos);
+
 			int xPos = tile.xPos, yPos = tile.yPos;
 			int xOffset = 0, yOffset = 0;
 			int i = neighbor % 8; // makes it so that, even if the neighbor int is 8 or above, it will still return the proper neighbor.
@@ -255,7 +267,11 @@ namespace StarScape.Source.World.Tiles
 			{
 				return ref Tile.tileSpace;
 			}
-			else if (yPos + yOffset < 0 || yPos + yOffset >= tiles.Length)
+			else if (yPos + yOffset < 0 || yPos + yOffset >= tiles[0].Length)
+			{
+				return ref Tile.tileSpace;
+			}
+			else if(tiles[xPos + xOffset][yPos + yOffset] == null)
 			{
 				return ref Tile.tileSpace;
 			}

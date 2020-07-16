@@ -73,9 +73,12 @@
     <Compile Include="Source\World\Ships\Ship.cs" />
     <Compile Include="Source\World\Ships\ShipBartox.cs" />
     <Compile Include="Source\World\Ships\ShipCalax.cs" />
+    <Compile Include="Source\World\Tiles\Atmospherics\Atmosphere.cs" />
+    <Compile Include="Source\World\Tiles\Machinery\MachineOxyGen.cs" />
+    <Compile Include="Source\World\Tiles\Machinery\Machinery.cs" />
     <Compile Include="Source\World\Tiles\Tile.cs" />
     <Compile Include="Source\World\Tiles\TileMap.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Attributes\AttAirPressure.cs" />
+    <Compile Include="Source\World\Tiles\TileSpace.cs" />
     <Compile Include="Source\World\Tiles\Tops\Attributes\AttAirtight.cs" />
     <Compile Include="Source\World\Tiles\Tops\Attributes\Attribute.cs" />
     <Compile Include="Source\World\Tiles\Tops\Top.cs" />

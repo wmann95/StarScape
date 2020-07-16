@@ -14,6 +14,9 @@ namespace StarScape.Source.World.Tiles.Tops.Attributes
 	{
 
 
-		public override void Update(GameTime gameTime){}
+		public override void Update(GameTime gameTime)
+		{
+			parentTop.parentTile.atmosphere.SetAirtight();
+		}
 	}
 }
