@@ -39,6 +39,12 @@ namespace StarScape.Source.World.Tiles
 			atmosphere = new Atmosphere(this);
 		}
 		
+		public override string ToString()
+		{
+			
+			return "TilePosition: <" + xPos + ", " + yPos + ">";
+		}
+
 		public void LoadFromFile() { } // Placeholder for getting tile information from a save file or what have you. Haven't gotten into that yet, hence the emptyness.
 
 		/// <summary>
@@ -64,7 +70,7 @@ namespace StarScape.Source.World.Tiles
 			foreach (Top t in tops)
 			{
 				if (t == null) continue;
-				//if (t.TopName == "HullTile1") continue;
+				//if (t.TopName == "WallTile1") continue;
 				t.Draw(batch);
 			}
 
@@ -85,7 +91,7 @@ namespace StarScape.Source.World.Tiles
 					color = new Color(1f, pressureColor, pressureColor);
 				}
 
-				batch.Draw(LoadHelper.GetTexture(atmosphereTexID), new Vector2(xPos, yPos) * 64 + parentTileMap.parentShip.Position, color * .5f);
+				batch.Draw(LoadHelper.GetTexture(atmosphereTexID), new Vector2(xPos, yPos) * 64 + parentTileMap.parentShip.Position, color * 0.5f);
 
 			}
 		}

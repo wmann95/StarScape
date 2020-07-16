@@ -21,9 +21,14 @@ namespace StarScape.Source.World.Ships
 
 		}
 
+		public override string GetShipName()
+		{
+			return "Bartox";
+		}
+
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(1, 1, this);
+			TileMap temp = new TileMap(10, 10, this);
 
 			BuildTops(temp);
 

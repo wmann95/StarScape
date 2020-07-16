@@ -20,9 +20,6 @@ namespace StarScape.Source.World
 
 		public World()
 		{
-			//map = new TileMap();
-
-			//player = new Player(0,0);
 			//ships.Add(new ShipBartox(new Vector2(0, 0)));
 			ships.Add(new ShipCalax(new Vector2(200f, 100f))); // make a new Calax ship at the specified point.
 		}
@@ -45,7 +42,6 @@ namespace StarScape.Source.World
 		/// </summary>
 		public void Draw(GameTime gameTime, SpriteBatch batch)
 		{
-			//map.Draw(batch);
 			foreach (Ship ship in ships)
 			{
 				ship.Draw(batch);
@@ -88,8 +84,7 @@ namespace StarScape.Source.World
 			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))
 			{
 				mouseRightFlag = true;
-				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;// cam.Position; //// - cam.Position;
-				//cameraOriginalPosition = cam.Position;
+				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;
 
 				Debug.WriteLine("Mouse Clicked Position: " + mouseRightClickedPosition);
 			}
@@ -98,7 +93,7 @@ namespace StarScape.Source.World
 			{
 				if (mouseRightFlag)
 				{
-					cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);// - cameraOriginalPosition;
+					cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
 				}
 			}
 
@@ -106,16 +101,13 @@ namespace StarScape.Source.World
 			{
 				Debug.WriteLine("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
 				mouseRightFlag = false;
-				//cameraOriginalPosition = cam.Position;
 				cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
 				
 			}
-
-			//player.Update(gameTime);
+			
 			foreach (Ship ship in ships)
 			{
 				ship.Update(gameTime);
-				//player.Load();
 			}
 		}
 	}

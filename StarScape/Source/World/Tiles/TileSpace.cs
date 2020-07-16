@@ -8,7 +8,7 @@ namespace StarScape.Source.World.Tiles
 {
 	public class TileSpace : Tile
 	{
-		public static float AtmosphereEscapeRate = 2000;
+		public static float AtmosphereEscapeRate = 5000;
 
 		public TileSpace() : base(-1, -1)
 		{

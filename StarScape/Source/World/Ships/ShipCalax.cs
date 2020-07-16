@@ -22,9 +22,14 @@ namespace StarScape.Source.World.Ships
 
 		}
 
+		public override string GetShipName()
+		{
+			return "Calax";
+		}
+
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(20, 10, this);
+			TileMap temp = new TileMap(200, 200, this);
 
 			BuildTops(temp);
 
@@ -40,67 +45,44 @@ namespace StarScape.Source.World.Ships
 			int shipWidth = map.GetWidth();
 			int shipHeight = map.GetHeight();
 
-			Ship.BuildRoom(map, 1, 0, 4, shipHeight);
-			Ship.BuildRoom(map, 4, 3, 9, 4);
-			Ship.BuildRoom(map, 4, 0, 5, 4);
-			Ship.BuildRoom(map, 8, 0, 5, 4);
-			Ship.BuildRoom(map, 4, 6, 5, 4);
-			Ship.BuildRoom(map, 8, 6, 5, 4);
+			int scale = 5;
 
-			if(map.GetTile(4, 4).GetTop(1) is TopWall)
+			Ship.BuildRoom(map, 1 * scale, 0, 4 * scale, 10 * scale);
+			Ship.BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
+			Ship.BuildRoom(map, 4 * scale, 0, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 8 * scale, 0, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
+
+			if(map.GetTile(4 * scale, 4 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(4, 4).tops.RemoveAt(1);
+				map.GetTile(4 * scale, 4 * scale).tops.RemoveAt(1);
 			}
-			if (map.GetTile(4, 5).GetTop(1) is TopWall)
+			if (map.GetTile(4 * scale, 5 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(4, 5).tops.RemoveAt(1);
+				map.GetTile(4 * scale, 5 * scale).tops.RemoveAt(1);
 			}
-			if (map.GetTile(6, 3).GetTop(1) is TopWall)
+			if (map.GetTile(6 * scale, 3 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(6, 3).tops.RemoveAt(1);
+				map.GetTile(6 * scale, 3 * scale).tops.RemoveAt(1);
 			}
-			if (map.GetTile(6, 6).GetTop(1) is TopWall)
+			if (map.GetTile(6 * scale, 6 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(6, 6).tops.RemoveAt(1);
+				map.GetTile(6 * scale, 6 * scale).tops.RemoveAt(1);
 			}
-			if (map.GetTile(10, 3).GetTop(1) is TopWall)
+			if (map.GetTile(10 * scale, 3 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(10, 3).tops.RemoveAt(1);
+				map.GetTile(10 * scale, 3 * scale).tops.RemoveAt(1);
 			}
-			if (map.GetTile(10, 6).GetTop(1) is TopWall)
+			if (map.GetTile(10 * scale, 6 * scale).GetTop(1) is TopWall)
 			{
-				map.GetTile(10, 6).tops.RemoveAt(1);
+				map.GetTile(10 * scale, 6 * scale).tops.RemoveAt(1);
 			}
 
-			map.AddTop(2, 1, new MachineOxyGen());
-			map.AddTop(5, 1, new MachineOxyGen());
-			map.AddTop(9, 1, new MachineOxyGen());
-
-			//Ship.BuildRoom(map, 4, 5, 10, 4);
-			//Ship.BuildRoom(map, 4, 3, 10, 4);
-
-			//			for (int y = 0; y < shipHeight; y++)
-			//			{
-			//				for (int x = 0; x < shipWidth; x++)
-			//				{
-			//
-			//					if (x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
-			//					{
-			//						map.AddTop(x, y, new TopHull());
-			//						map.AddTop(x, y, new TopWall());
-			//					}
-			//					else
-			//					{
-			//
-			//						map.AddTop(x, y, new TopHull());
-			//						TopFloor floor = new TopFloor();
-			//						//if (x == 1 && y == 1) floor.setDebug(true);
-			//
-			//						map.AddTop(x, y, floor);
-			//					}
-			//
-			//				}
-			//			}
+			map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
+			map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
+			map.AddTop(9 * scale, 1 * scale, new MachineOxyGen());
+			
 		}
 		
 		long timer = 0;
@@ -112,21 +94,21 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime;
 			base.Update(gameTime);
 			timer = Time.gameTime - timer;
-			//Debug.WriteLine(clock, true);
 
-			//Position += new Vector2((float)(50f * gameTime.ElapsedGameTime.TotalSeconds), (float)(25f * gameTime.ElapsedGameTime.TotalSeconds));
 
 			if (Time.gameTime - clock >= 3000 && flag)
 			{
-				//clock = Time.gameTime;
-
-				//Console.WriteLine("Changing Air Pressure");
 
 				flag = false;
-				shipTilemap.RemoveTile(11, 8);
-				shipTilemap.RemoveTile(7, 8);
-				shipTilemap.RemoveTile(3, 8);
+				
+				shipTilemap.RemoveTile(1 * 5, 8 * 5);
+				shipTilemap.RemoveTile(2 * 5, 8 * 5);
+				shipTilemap.RemoveTile(4 * 5, 8 * 5);
+				
 			}
+
+			//Tile tile = shipTilemap.GetNeighborOfTile(shipTilemap.GetTile(10, 2), 0);
+			//Console.WriteLine(tile);
 
 		}
 	}

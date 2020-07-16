@@ -42,7 +42,7 @@ namespace StarScape.Source.World.Tiles
 			{
 				for(int j = 0; j < tiles[i].Length; j++)
 				{
-					this.SetTile(i, j, new Tile(i, j));
+					tiles[i][j] =  new Tile(i, j);
 				}
 			}
 		}
@@ -89,10 +89,12 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="xPos"></param>
 		/// <param name="yPos"></param>
 		/// <param name="tile"></param>
-		private void SetTile(int xPos, int yPos, Tile tile)
+		private void SetTile(int xPos, int yPos, ref Tile tile)
 		{
 			tiles[xPos][yPos] = tile;
 			tiles[xPos][yPos].parentTileMap = this;
+			//tiles[xPos][yPos].atmosphere = tile.atmosphere;
+			//tiles[xPos][yPos].atmosphere.parentTile = tiles[xPos][yPos];
 		}
 
 		/// <summary>
@@ -150,11 +152,15 @@ namespace StarScape.Source.World.Tiles
 		{
 			if (tiles[x][y] == null) return;
 
+			//Console.WriteLine("This tile: " + tiles[x][y].ToString());
+
 			for(int i = 0; i < 8; i++)
 			{
-				Console.WriteLine("xPos: " + x + ", yPos: " + y + ", neighborID: " + i);
+				//Console.WriteLine("xPos: " + x + ", yPos: " + y + ", neighborID: " + i);
+				Tile neighbor = GetNeighborOfTile(tiles[x][y], i);
+				//Console.WriteLine("Neighbor: " + i + ", " + neighbor.ToString());
 
-				if (GetNeighborOfTile(tiles[x][y], i) == null) continue;
+				if (GetNeighborOfTile(tiles[x][y], i) is TileSpace) continue;
 				GetNeighborOfTile(tiles[x][y], i).atmosphere.setDirty();
 			}
 
@@ -184,13 +190,35 @@ namespace StarScape.Source.World.Tiles
 						continue;
 					}
 
-					this.SetTile(i + xPos, j + yPos, inTiles[i][j]);
+					SetTile(i + xPos, j + yPos, ref inTiles[i][j]);
+					tiles[i + xPos][j + yPos].xPos = i + xPos;
+					tiles[i + xPos][j + yPos].yPos = j + yPos;
+					tiles[i + xPos][j + yPos].parentTileMap = this;
 
 					//Console.WriteLine("TileMap Add Tile To x={0} || TileMap Add Tile To y={1} ||| ", (i + xPos), (j + yPos), tiles[i + xPos]);
 				}
 			}
 
 
+		}
+
+		public Tile[][] GetTiles(int x1, int y1, int x2, int y2)
+		{
+			Tile[][] buffer = new Tile[x2 - x1 + 1][];
+			for(int i = 0; i < buffer.Length; i++)
+			{
+				buffer[i] = new Tile[y2 - y1 + 1];
+			}
+
+			for(int i = 0; i < buffer.Length; i++)
+			{
+				for (int j = 0; j < buffer[0].Length; j++)
+				{
+					buffer[i][j] = tiles[x1 + i][y1 + j];
+				}
+			}
+
+			return buffer;
 		}
 
 		/// <summary>

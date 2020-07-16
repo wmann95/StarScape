@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Tiles;
@@ -16,11 +18,10 @@ namespace StarScape.Source.World.Ships
 	public abstract class Ship
 	{
 
+		//The base tilemap that the ship is built onto.
 		public TileMap shipTilemap;
 
-		//public bool isDirty { get; private set; }
-
-		public Vector2 Position; //Position "in space", if you will.
+		public Vector2 Position; //Position "in space", if you will. It's the position in the world relative to the world coordinate system.
 
 		/// <summary>
 		/// This constructor does some of the backend stuff so that a developer working on ships doesn't need to do the small things like call CreateTileMap for each ship.
@@ -29,9 +30,16 @@ namespace StarScape.Source.World.Ships
 		public Ship(Vector2 pos)
 		{
 			shipTilemap = CreateTileMap();
-			RemoveEmptyTiles();
+			OptimizeShip();
 			Position = pos;
 		}
+
+		public new string ToString()
+		{
+			return GetShipName();
+		}
+
+		public abstract string GetShipName();
 
 		/// <summary>
 		/// This is a required method of all Ship classes that handles the generation of the ship.
@@ -148,16 +156,19 @@ namespace StarScape.Source.World.Ships
 		/// <summary>
 		/// This is currently a WIP method that will optimize the ships tilemap to be fitted with no empty tiles outside of the smallest box to cover all non-null tiles in the tilemap.
 		/// </summary>
-		private void RemoveEmptyTiles()
+		private void OptimizeShip()
 		{
-			int lowestX = 0;
-			int lowestY = 0;
-			int highestX = shipTilemap.GetWidth();
-			int highestY = shipTilemap.GetHeight();
+			Stopwatch timer = new Stopwatch();
+			timer.Start();
 
+			int lowestX = shipTilemap.GetWidth();
+			int lowestY = shipTilemap.GetHeight();
+			int highestX = 0;
+			int highestY = 0;
+
+			// remove all empty tiles
 			for (int i = 0; i < shipTilemap.GetWidth(); i++)
 			{
-
 				for (int j = 0; j < shipTilemap.GetHeight(); j++)
 				{
 					if (shipTilemap.GetTile(i, j) == null) continue;
@@ -169,17 +180,45 @@ namespace StarScape.Source.World.Ships
 				}
 			}
 
-			for (int i = 0; i < shipTilemap.GetWidth(); i++)
+			// find the bounds of the actual ship
+			for (int x = 0; x < shipTilemap.GetWidth(); x++)
 			{
-				for (int j = 0; j < shipTilemap.GetHeight(); j++)
+				for (int y = 0; y < shipTilemap.GetHeight(); y++)
 				{
-					if (shipTilemap.GetTile(i, j) != null && lowestX == 0) { lowestX = i; }
-					//if (shipTilemap.GetTile(i, j) != null && lowestY == 0) { lowestX = i; }
+					Tile tile = shipTilemap.GetTile(x, y);
+					if (tile != null)
+					{
+						if (lowestX >= x) lowestX = x;
+						if (lowestY >= y) lowestY = y;
+						if (highestX <= x) highestX = x;
+						if (highestY <= x) highestY = y;
+					}
 				}
 			}
 
-			Console.WriteLine(lowestX);
+			//Console.WriteLine("Ship: " + GetShipName());
+			//Console.WriteLine("Low X: " + lowestX);
+			//Console.WriteLine("Low Y: " + lowestY);
+			//Console.WriteLine("High X: " + highestX);
+			//Console.WriteLine("High Y: " + highestY);
+			
+			int newXSize = highestX - lowestX + 1; 
+			int newYSize = highestY - lowestY + 1;
 
+			TileMap buffer = new TileMap(newXSize, newYSize, this); // Make a new tilemap based on the optimized box.
+			buffer.PlaceTiles(shipTilemap.GetTiles(lowestX, lowestY, highestX, highestY), 0, 0); // get the current unoptimized tilemaps tiles and place them onto the buffer.
+			
+			this.shipTilemap = buffer; // set this tilemap to the optimized tilemap.
+			
+			//Console.WriteLine("Ship: " + GetShipName());
+			//Console.WriteLine("X Size: " + shipTilemap.GetWidth());
+			//Console.WriteLine("Y Size: " + shipTilemap.GetHeight());
+
+			buffer = null; // Dispose of the buffer so that the trash collector can take care of the empty object.
+
+			timer.Stop();
+
+			Console.WriteLine("Optimization Ended after " + timer.ElapsedMilliseconds + " milliseconds.");
 		}
 	}
 }
