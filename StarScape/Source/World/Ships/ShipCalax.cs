@@ -28,7 +28,7 @@ namespace StarScape.Source.World.Ships
 
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(200, 200);
+			TileMap temp = new TileMap(50, 50);
 
 			GenerateShip(temp);
 
@@ -46,17 +46,19 @@ namespace StarScape.Source.World.Ships
 
 			int scale = 1;
 
-			Ship.BuildRoom(map, 0, 0, 50, 50);
-			//Ship.BuildRoom(map, 3 * scale, 3 * scale, 9 * scale, 4 * scale);
-			//Ship.BuildRoom(map, 3 * scale, 0, 5 * scale, 4 * scale);
-			//Ship.BuildRoom(map, 7 * scale, 0, 5 * scale, 4 * scale);
-			//Ship.BuildRoom(map, 3 * scale, 6 * scale, 5 * scale, 4 * scale);
-			//Ship.BuildRoom(map, 7 * scale, 6 * scale, 5 * scale, 4 * scale);
-			
+			Ship.BuildRoom(map, 1 * scale, 0, 4 * scale, 10 * scale);
+			Ship.BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
+			Ship.BuildRoom(map, 4 * scale, 0, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 8 * scale, 0, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
+			Ship.BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
+
+			//if(map.GetTile())
+
 			//map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
 			//map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
 			//map.AddTop(9 * scale, 1 * scale, new MachineOxyGen());
-			
+
 		}
 		
 		long timer = 0;
@@ -74,11 +76,8 @@ namespace StarScape.Source.World.Ships
 			{
 
 				flag = false;
-				
-				shipTilemap.RemoveAllTilesAt(1,1);
-				//shipTilemap.RemoveTile(2 * 3, 8 * 3);
-				//shipTilemap.RemoveTile(4 * 3, 8 * 3);
-				
+
+				shipTilemap.RemoveAllTilesAt(1, 1);
 			}
 
 			//Tile tile = shipTilemap.GetNeighborOfTile(shipTilemap.GetTile(10, 2), 0);

@@ -171,7 +171,7 @@ namespace StarScape.Source.World.Ships
 				for (int y = 0; y < shipTilemap.GetYSize(); y++)
 				{
 					bool tileNotEmptyFlag = false;
-					for(int z = 0; z < 10; z++)
+					for(int z = 0; z < shipTilemap.MaxHeightOfTileMap; z++)
 					{
 						if (shipTilemap.GetTile(x, y, z) != null)
 						{

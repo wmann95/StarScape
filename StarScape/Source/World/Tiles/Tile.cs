@@ -24,11 +24,6 @@ namespace StarScape.Source.World.Tiles
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
 		public abstract int TileLayer { get; }
-
-		//there should never be a tile that has any internal coordinates of less than 0, therefore this can
-		//be used as a checker kind of like checking if an object is null. If the current tile is tileSpace, do
-		//stuff that would be done if it were actually space.
-		public static Tile tileSpace = new TileSpace();
 		
 		public Tile(int x, int y)
 		{

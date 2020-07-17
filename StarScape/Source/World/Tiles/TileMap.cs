@@ -173,9 +173,6 @@ namespace StarScape.Source.World.Tiles
 						//batch.Draw(LoadHelper.GetTexture(zIndex.TileTextureID)/*Get the texture from the ID*/,
 						//	(new Vector2(zIndex.xPos, zIndex.yPos) * 64 /*each tile texture is 64px wide.*/) + Position /*add the ship position offset*/,
 						//	Color.White /*this is used for tinting.*/); ;
-
-						
-
 					}
 				}
 			}
@@ -241,26 +238,17 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="y"></param>
 		public void RemoveTile(int x, int y, int z)
 		{
-			if (tileMap[x][y][z] == null) return;
-
+			if(z == 0)
+			{
+				tileMap[x][y][z] = new TileSpace();
+				atmosphereMap[x][y] = new Atmosphere(this, x, y, 0);
+				atmosphereMap[x][y].canChangePressure = false;
+				Debug.Log("i is: " + z + ", Create space at: " + x + ", " + y);
+				return;
+			}
 			//Console.WriteLine("This tile: " + tiles[x][y].ToString());
 
-			for(int i = 0; i < 8; i++)
-			{
-				//Console.WriteLine("xPos: " + x + ", yPos: " + y + ", neighborID: " + i);
-				Point neighbor = GetNeighborPosition(x, y, i);
-				//Console.WriteLine("Neighbor: " + i + ", " + neighbor.ToString());
-
-				if (neighbor == new Point(-1, -1)) continue;
-				atmosphereMap[neighbor.X][neighbor.Y].setDirty();
-			}
-
-			for (int i = 0; i < MaxHeightOfTileMap; i++)
-			{
-				if(i == 0) { tileMap[x][y][i] = new TileSpace(); continue; }
-
-				tileMap[x][y][i] = null;
-			}
+			tileMap[x][y][z] = null;
 		}
 
 		public void RemoveAllTilesAt(int x, int y)
@@ -268,14 +256,9 @@ namespace StarScape.Source.World.Tiles
 			
 			for (int i = 0; i < 8; i++)
 			{
-				//Console.WriteLine("xPos: " + x + ", yPos: " + y + ", neighborID: " + i);
-				Point neighbor = GetNeighborPosition(x, y, i);
-				//Console.WriteLine("Neighbor: " + i + ", " + neighbor.ToString());
-
-				if (neighbor == new Point(-1, -1)) continue;
-					atmosphereMap[neighbor.X][neighbor.Y].setDirty();
-
-				atmosphereMap[x][y].setDirty();
+				Atmosphere atmos = GetNeighborAtmos(x, y, i);
+				if (atmos != null) atmos.setDirty();
+				//atmosphereMap[x][y].setDirty();
 			}
 
 			for (int i = 0; i < MaxHeightOfTileMap; i++)
@@ -314,14 +297,25 @@ namespace StarScape.Source.World.Tiles
 				{
 					for (int k = 0; k < inTiles[i][j].Length; k++)
 					{
-						if (inTiles[i + xPos][j + yPos][k] == null)continue;
 
-						if (i + xPos < 0 || i + xPos >= tileMap.Length | j + yPos < 0 || j + yPos >= tileMap[0].Length)
+						if (i + xPos < 0 || i + xPos >= tileMap.Length | j + yPos < 0 || j + yPos >= tileMap[i].Length)
 						{
 							Debug.Log("PlaceTiles Error: Input points out-of-bounds.", true);
 							continue;
 						}
-						PlaceTile(inTiles[i + xPos][j + yPos][k], true);
+						
+						if (inTiles[i][j][k] == null) continue;
+
+						inTiles[i][j][k].xPos = i + xPos;
+						inTiles[i][j][k].yPos = j + yPos;
+
+						Debug.Log(inTiles[i][j][k].xPos);
+						Debug.Log(inTiles[i][j][k].yPos);
+
+						PlaceTile(inTiles[i][j][k], true);
+
+						if (tileMap[i + xPos][j + yPos][k] == null) continue;
+
 						tileMap[i + xPos][j + yPos][k].xPos = i + xPos;
 						tileMap[i + xPos][j + yPos][k].yPos = j + yPos;
 						tileMap[i + xPos][j + yPos][k].ParentTileMap = this;
@@ -438,6 +432,19 @@ namespace StarScape.Source.World.Tiles
 			}
 
 			return new Point(xPos + xOffset, yPos + yOffset);
+		}
+
+		public Atmosphere GetNeighborAtmos(int xPos, int yPos, int i)
+		{
+			Point neighborPoint = GetNeighborPosition(xPos, yPos, i);
+			
+			if(neighborPoint == new Point(-1, -1))
+			{
+				return null;
+			}
+
+			return atmosphereMap[neighborPoint.X][neighborPoint.Y];
+
 		}
 
 	}
