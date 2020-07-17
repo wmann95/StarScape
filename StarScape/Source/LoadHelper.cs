@@ -42,6 +42,8 @@ namespace StarScape.Source
 			
 			return textures[textureID]; //return the texture.
 		}
+
+
 		
 	}
 }

@@ -28,36 +28,34 @@ namespace StarScape.Source.World.Ships
 
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(10, 10, this);
+			TileMap temp = new TileMap(10, 10);
 
-			BuildTops(temp);
+			GenerateShip(temp);
 
 			return temp;
 		}
 
-		private void BuildTops(in TileMap map)
+		private void GenerateShip(in TileMap map)
 		{
-			int shipWidth = map.GetWidth();
-			int shipHeight = map.GetHeight();
+			int shipWidth = map.GetXSize();
+			int shipHeight = map.GetYSize();
 
-			for(int y = 0; y < shipHeight; y++)
+			for(int x = 0; x < shipWidth; x++)
 			{
-				for(int x = 0; x < shipWidth; x++)
+				for(int y = 0; y < shipWidth; y++)
 				{
 
 					if(x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
 					{
-						map.AddTop(x, y, new TopHull());
-						map.AddTop(x, y, new TopWall());
+						
+						map.PlaceTile(new TileHull(x, y), true);
+						map.PlaceTile(new TileWall(x, y), true);
 					}
 					else
 					{
 
-						map.AddTop(x, y, new TopHull());
-						TopFloor floor = new TopFloor();
-						//if (x == 1 && y == 1) floor.setDebug(true);
-
-						map.AddTop(x, y, floor);
+						map.PlaceTile(new TileHull(x, y), true);
+						map.PlaceTile(new TileFloor(x, y), true);
 					}
 
 				}
@@ -73,12 +71,12 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime;
 			base.Update(gameTime);
 			timer = Time.gameTime - timer;
-			//Debug.WriteLine(clock, true);
 
-			if (Time.gameTime - clock >= 100)
+			if (Time.gameTime - clock >= 1000)
 			{
 				clock = Time.gameTime;
-				
+
+				Debug.Log(clock, true);
 
 
 			}

@@ -10,9 +10,12 @@ namespace StarScape.Source.World.Tiles.Tops
 	/// <summary>
 	/// Essentially a placeholder class that keeps the air on the inside of the ship... not currently being worked into the atmospherics calculations.
 	/// </summary>
-	public class TopWall : Top
+	public class TileWall : Tile
 	{
-		public TopWall()
+
+		public override int TileLayer { get { return 5; } }
+
+		public TileWall(int x, int y) : base(x, y)
 		{
 			AddAttribute(new AttAirtight());
 		}

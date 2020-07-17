@@ -67,6 +67,8 @@
     <Compile Include="Source\Rendering\Camera2D.cs" />
     <Compile Include="Source\Rendering\ResolutionIndependentRenderer.cs" />
     <Compile Include="Source\Time.cs" />
+    <Compile Include="Source\World\IDrawable.cs" />
+    <Compile Include="Source\World\IUpdatable.cs" />
     <Compile Include="Source\World\Keyboard.cs" />
     <Compile Include="Source\World\Mouse.cs" />
     <Compile Include="Source\World\Player.cs" />
@@ -74,18 +76,22 @@
     <Compile Include="Source\World\Ships\ShipBartox.cs" />
     <Compile Include="Source\World\Ships\ShipCalax.cs" />
     <Compile Include="Source\World\Tiles\Atmospherics\Atmosphere.cs" />
+    <Compile Include="Source\World\Tiles\ITile.cs" />
     <Compile Include="Source\World\Tiles\Machinery\MachineOxyGen.cs" />
-    <Compile Include="Source\World\Tiles\Machinery\Machinery.cs" />
+    <Compile Include="Source\World\Tiles\Machinery\IMachinery.cs" />
+    <Compile Include="Source\World\Tiles\Power\Electrical.cs" />
     <Compile Include="Source\World\Tiles\Tile.cs" />
     <Compile Include="Source\World\Tiles\TileMap.cs" />
     <Compile Include="Source\World\Tiles\TileSpace.cs" />
     <Compile Include="Source\World\Tiles\Tops\Attributes\AttAirtight.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Attributes\Attribute.cs" />
+    <Compile Include="Source\World\Tiles\Tops\Attributes\IAttributable.cs" />
+    <Compile Include="Source\World\Tiles\Tops\Attributes\IAttribute.cs" />
+    <Compile Include="Source\World\Tiles\Tops\ITop.cs" />
     <Compile Include="Source\World\Tiles\Tops\Top.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TopDoor.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TopFloor.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TopHull.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TopWall.cs" />
+    <Compile Include="Source\World\Tiles\Tops\TileDoor.cs" />
+    <Compile Include="Source\World\Tiles\Tops\TileFloor.cs" />
+    <Compile Include="Source\World\Tiles\Tops\TileHull.cs" />
+    <Compile Include="Source\World\Tiles\Tops\TileWall.cs" />
     <Compile Include="Source\World\World.cs" />
   </ItemGroup>
   <ItemGroup>

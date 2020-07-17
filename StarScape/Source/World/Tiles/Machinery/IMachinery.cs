@@ -7,14 +7,9 @@ using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles.Machinery
 {
-	public class Machinery : Top
+	interface IMachinery
 	{
-		protected bool isMachineOn = false;
-
-		public Machinery()
-		{
-			MaxTopCountPerTile = 1;
-		}
+		bool IsMachineOn { get; }
 		
 	}
 }

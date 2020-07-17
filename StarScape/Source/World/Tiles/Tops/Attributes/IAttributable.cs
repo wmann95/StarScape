@@ -10,11 +10,12 @@ namespace StarScape.Source.World.Tiles.Tops.Attributes
 	/// <summary>
 	/// Blueprint for all attributes. It's intentionally a very simple class.
 	/// </summary>
-	public abstract class Attribute
+	public interface IAttributable
 	{
-		public Top parentTop { get; internal set; }
+		List<IAttribute> Attributes { get; }
 
-		public abstract void Update(GameTime gameTime);
-		
+		IAttribute GetAttribute<IAttribute>();
+		bool HasAttribute<IAttribute>();
+		void AddAttribute<IAttribute>(IAttribute attribute);
 	}
 }

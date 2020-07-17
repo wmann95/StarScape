@@ -19,7 +19,6 @@ namespace StarScape.Source.World.Ships
 		
 		public ShipCalax(Vector2 pos) : base(pos)
 		{
-
 		}
 
 		public override string GetShipName()
@@ -29,9 +28,9 @@ namespace StarScape.Source.World.Ships
 
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(200, 200, this);
+			TileMap temp = new TileMap(200, 200);
 
-			BuildTops(temp);
+			GenerateShip(temp);
 
 			return temp;
 		}
@@ -40,48 +39,23 @@ namespace StarScape.Source.World.Ships
 		/// This is where the ship generation will be held. A decent example of how a predetermined ship can be built using the BuildRoom tool.
 		/// </summary>
 		/// <param name="map"></param>
-		private void BuildTops(in TileMap map)
+		private void GenerateShip(TileMap map)
 		{
-			int shipWidth = map.GetWidth();
-			int shipHeight = map.GetHeight();
+			int shipWidth = map.GetXSize();
+			int shipHeight = map.GetYSize();
 
-			int scale = 5;
+			int scale = 1;
 
-			Ship.BuildRoom(map, 1 * scale, 0, 4 * scale, 10 * scale);
-			Ship.BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
-			Ship.BuildRoom(map, 4 * scale, 0, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 8 * scale, 0, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
-
-			if(map.GetTile(4 * scale, 4 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(4 * scale, 4 * scale).tops.RemoveAt(1);
-			}
-			if (map.GetTile(4 * scale, 5 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(4 * scale, 5 * scale).tops.RemoveAt(1);
-			}
-			if (map.GetTile(6 * scale, 3 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(6 * scale, 3 * scale).tops.RemoveAt(1);
-			}
-			if (map.GetTile(6 * scale, 6 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(6 * scale, 6 * scale).tops.RemoveAt(1);
-			}
-			if (map.GetTile(10 * scale, 3 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(10 * scale, 3 * scale).tops.RemoveAt(1);
-			}
-			if (map.GetTile(10 * scale, 6 * scale).GetTop(1) is TopWall)
-			{
-				map.GetTile(10 * scale, 6 * scale).tops.RemoveAt(1);
-			}
-
-			map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
-			map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
-			map.AddTop(9 * scale, 1 * scale, new MachineOxyGen());
+			Ship.BuildRoom(map, 0, 0, 50, 50);
+			//Ship.BuildRoom(map, 3 * scale, 3 * scale, 9 * scale, 4 * scale);
+			//Ship.BuildRoom(map, 3 * scale, 0, 5 * scale, 4 * scale);
+			//Ship.BuildRoom(map, 7 * scale, 0, 5 * scale, 4 * scale);
+			//Ship.BuildRoom(map, 3 * scale, 6 * scale, 5 * scale, 4 * scale);
+			//Ship.BuildRoom(map, 7 * scale, 6 * scale, 5 * scale, 4 * scale);
+			
+			//map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
+			//map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
+			//map.AddTop(9 * scale, 1 * scale, new MachineOxyGen());
 			
 		}
 		
@@ -101,9 +75,9 @@ namespace StarScape.Source.World.Ships
 
 				flag = false;
 				
-				shipTilemap.RemoveTile(1 * 5, 8 * 5);
-				shipTilemap.RemoveTile(2 * 5, 8 * 5);
-				shipTilemap.RemoveTile(4 * 5, 8 * 5);
+				shipTilemap.RemoveAllTilesAt(1,1);
+				//shipTilemap.RemoveTile(2 * 3, 8 * 3);
+				//shipTilemap.RemoveTile(4 * 3, 8 * 3);
 				
 			}
 

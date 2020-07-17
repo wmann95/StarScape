@@ -10,13 +10,13 @@ namespace StarScape.Source.World.Tiles.Tops.Attributes
 	/// <summary>
 	/// Placeholder attribute that will be used for walls and hulls to make sure the air pressure on the tile knows it's not connected directly to space.
 	/// </summary>
-	public class AttAirtight : Attribute
+	public class AttAirtight : IAttribute
 	{
+		public Top parentTop { get; set; }
 
-
-		public override void Update(GameTime gameTime)
+		public void Update(GameTime gameTime)
 		{
-			parentTop.parentTile.atmosphere.SetAirtight();
+			//parentTop.parentTile.atmosphere.SetAirtight();
 		}
 	}
 }

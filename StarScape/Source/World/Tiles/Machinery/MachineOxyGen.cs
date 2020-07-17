@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using StarScape.Source.World.Tiles.Atmospherics;
+using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles.Machinery
 {
-	public class MachineOxyGen : Machinery
+	public class MachineOxyGen : Top, IMachinery
 	{
+		public bool IsMachineOn { get; private set; }
+
 		private float airProduction = 25f;
 		private float minAirPressure = 70f;
 		private float turnOffPressure = Atmosphere.AtmosphericPressure;
@@ -19,25 +22,24 @@ namespace StarScape.Source.World.Tiles.Machinery
 
 		public MachineOxyGen()
 		{
-
 		}
-		
+
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
-			if (parentTile.atmosphere.airPressure <= minAirPressure)
-			{
-				isMachineOn = true;
-				turnOnTime = Time.gameTime;
-			}
-			if (parentTile.atmosphere.airPressure >= turnOffPressure && Time.gameTime - turnOnTime >= stayOnDelay)
-			{
-				isMachineOn = false;
-
-			}
-
-			if (isMachineOn) parentTile.atmosphere.ChangePressure(airProduction);
+			//if (parentTile.atmosphere.airPressure <= minAirPressure)
+			//{
+			//	IsMachineOn = true;
+			//	turnOnTime = Time.gameTime;
+			//}
+			//if (parentTile.atmosphere.airPressure >= turnOffPressure && Time.gameTime - turnOnTime >= stayOnDelay)
+			//{
+			//	IsMachineOn = false;
+//
+			//}
+//
+			//if (IsMachineOn) parentTile.atmosphere.ChangePressure(airProduction);
 		}
 	}
 }

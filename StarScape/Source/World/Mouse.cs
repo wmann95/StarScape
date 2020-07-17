@@ -88,7 +88,7 @@ namespace StarScape.Source.World
 				}
 				default:
 				{
-					Debug.WriteLine(button + " is not a valid mouse button option.");
+					Debug.Log(button + " is not a valid mouse button option.");
 					return false;
 				}
 			}
@@ -135,7 +135,7 @@ namespace StarScape.Source.World
 				}
 				default:
 				{
-					Debug.WriteLine(button + " is not a valid mouse button option.");
+					Debug.Log(button + " is not a valid mouse button option.");
 					return false;
 				}
 			}

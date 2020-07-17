@@ -17,7 +17,7 @@ namespace StarScape.Source.World.Tiles.Tops
 	{
 		public Tile parentTile { get; internal set; }
 		
-		List<Attribute> attributes = new List<Attribute>();
+		List<IAttribute> attributes = new List<IAttribute>();
 
 		public int textureID { get; private set; } // an int that represents the index in the LoadHelper.textures list that allows you to retrieve the wanted texture.
 		//public bool debugRenderFlag { get; set; }
@@ -69,7 +69,7 @@ namespace StarScape.Source.World.Tiles.Tops
 		/// <param name="gameTime"></param>
 		public virtual void Update(GameTime gameTime)
 		{
-			foreach(Attribute att in attributes)
+			foreach(IAttribute att in attributes)
 			{
 				att.Update(gameTime);
 			}
@@ -82,9 +82,9 @@ namespace StarScape.Source.World.Tiles.Tops
 		/// <param name="batch"></param>
 		public virtual void Draw(SpriteBatch batch)
 		{
-			batch.Draw(LoadHelper.GetTexture(textureID)/*Get the texture from the ID*/,
-				(new Vector2(parentTile.xPos, parentTile.yPos) * 64 /*each tile texture is 64px wide.*/) + parentTile.parentTileMap.parentShip.Position /*add the ship position offset*/,
-				Color.White /*this is used for tinting.*/);
+			//batch.Draw(LoadHelper.GetTexture(textureID)/*Get the texture from the ID*/,
+			//	(new Vector2(parentTile.xPos, parentTile.yPos) * 64 /*each tile texture is 64px wide.*/) + parentTile.parentTileMap.parentShip.Position /*add the ship position offset*/,
+			//	Color.White /*this is used for tinting.*/);
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace StarScape.Source.World.Tiles.Tops
 		/// Check if this top has the attribute already and if not, add the attribute and set the attributes parent to this.
 		/// </summary>
 		/// <param name="att"></param>
-		public void AddAttribute(Attribute att)
+		public void AddAttribute(IAttribute att)
 		{
 			if (HasAttribute(att)) return;
 
@@ -135,14 +135,14 @@ namespace StarScape.Source.World.Tiles.Tops
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public Attribute getAttribute<T>()
+		public IAttribute getAttribute<IAttribute>()
 		{
 			for(int i = 0; i < attributes.Count(); i++)
 			{
-				if (attributes.ElementAt(i) is T) return attributes.ElementAt(i);
+				if (attributes.ElementAt(i) is IAttribute) return (IAttribute)(attributes.ElementAt(i));
 			}
 
-			return null;
+			return default;
 		}
 
 	}

@@ -86,7 +86,7 @@ namespace StarScape.Source.World
 				mouseRightFlag = true;
 				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;
 
-				Debug.WriteLine("Mouse Clicked Position: " + mouseRightClickedPosition);
+				Debug.Log("Mouse Clicked Position: " + mouseRightClickedPosition);
 			}
 
 			if (Mouse.IsButtonPressed(Mouse.MouseButton.Left))
@@ -99,7 +99,7 @@ namespace StarScape.Source.World
 
 			if (Mouse.MouseButtonUp(Mouse.MouseButton.Left))
 			{
-				Debug.WriteLine("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
+				Debug.Log("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
 				mouseRightFlag = false;
 				cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
 				

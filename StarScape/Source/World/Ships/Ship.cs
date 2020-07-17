@@ -15,9 +15,8 @@ namespace StarScape.Source.World.Ships
 	/// <summary>
 	/// Blueprint for all Ship classes.
 	/// </summary>
-	public abstract class Ship
+	public abstract class Ship : IUpdatable, IDrawable
 	{
-
 		//The base tilemap that the ship is built onto.
 		public TileMap shipTilemap;
 
@@ -71,6 +70,7 @@ namespace StarScape.Source.World.Ships
 		public virtual void Update(GameTime gameTime)
 		{
 			shipTilemap.Update(gameTime);
+			shipTilemap.Position = this.Position;
 		}
 
 		/// <summary>
@@ -81,37 +81,35 @@ namespace StarScape.Source.World.Ships
 		/// <param name="yPos"></param>
 		/// <param name="xSize"></param>
 		/// <param name="ySize"></param>
-		public static void BuildRoom(in TileMap tileMap, int xPos, int yPos, int xSize, int ySize)
+		public static void BuildRoom(TileMap tileMap, int xPos, int yPos, int xSize, int ySize)
 		{
+
+			TileMap buffer = new TileMap(xSize, ySize);
 			
-			Tile[][] buffer = new Tile[xSize][];
-			for(int x = 0; x < xSize; x++)
-			{
-				buffer[x] = new Tile[ySize];
-			}
-			//Console.WriteLine("buffer xSize = {0} || buffer ySize = {1}", (xSize), (ySize));
 
 			for (int i = 0; i < xSize; i++)
 			{
-				for(int j = 0; j < ySize; j++)
+				for (int j = 0; j < ySize; j++)
 				{
-					buffer[i][j] = new Tile(i + xPos, j + yPos); //initialize the new tile
-					Tile.AddTop(new TopHull(), ref buffer[i][j]); //set the new tile to have a base hull (which all actual parts of the ship should have).
+					buffer.PlaceTile(new TileHull(i, j), true);
+					//Tile.AddTop(new TopHull(), ref buffer[i][j]); //set the new tile to have a base hull (which all actual parts of the ship should have).
 
 					if (i == 0 || i == xSize - 1 || j == 0 || j == ySize - 1)
 					{
-						Tile.AddTop(new TopWall(), ref buffer[i][j]); //set the outside perimeter to be walls
-
+						//Tile.AddTop(new TopWall(), ref buffer[i][j]); //set the outside perimeter to be walls
+						buffer.PlaceTile(new TileWall(i, j), true);
 					}
 					else
 					{
-						Tile.AddTop(new TopFloor(), ref buffer[i][j]); //Tile isn't a perimeter tile, add a floor.
+						//Tile.AddTop(new TopFloor(), ref buffer[i][j]); //Tile isn't a perimeter tile, add a floor.
+						buffer.PlaceTile(new TileFloor(i, j), true);
 					}
 				}
 			}
 
 			//Console.WriteLine("xPos = {0} || yPos = {1}", (xPos), (yPos));
-			tileMap.PlaceTiles(buffer, xPos, yPos); //place the new tiles onto the tilemap.
+			tileMap.PasteTiles(buffer.ToArray(), xPos, yPos); //place the new tiles onto the tilemap.
+
 
 		}
 
@@ -124,32 +122,32 @@ namespace StarScape.Source.World.Ships
 		/// <param name="rotation"></param>
 		public static void BuildDoor(in TileMap tileMap, int xPos, int yPos, int rotation)
 		{
-			List<Top> tops = tileMap.GetTile(xPos, yPos).tops;
-			bool hullFlag = false;
-			bool wallFlag = false;
+			//List<Top> tops = tileMap.GetTile(xPos, yPos).tops;
+			//bool hullFlag = false;
+			//bool wallFlag = false;
 
-			foreach(Top t in tops)
-			{
-				if(t is TopHull)
-				{
-					hullFlag = true;
-				}
-				if (t is TopWall)
-				{
-					wallFlag = true;
-				}
+			//foreach(Top t in tops)
+			//{
+			//	if(t is TopHull)
+			//	{
+			//		hullFlag = true;
+			//	}
+			//	if (t is TopWall)
+			//	{
+			//		wallFlag = true;
+			//	}
 
-			}
+			//}
 
-			if (wallFlag)
-			{
+			//if (wallFlag)
+			//{
 				//tileMap.GetTile(xPos, yPos).tops.Remove<TopWall>();
-			}
+			//}
 
-			if (hullFlag)
-			{
-				tileMap.AddTop(xPos, yPos, new TopDoor());
-			}
+			//if (hullFlag)
+			//{
+			//	tileMap.AddTop(xPos, yPos, new TopDoor());
+			//}
 
 		}
 
@@ -161,58 +159,76 @@ namespace StarScape.Source.World.Ships
 			Stopwatch timer = new Stopwatch();
 			timer.Start();
 
-			int lowestX = shipTilemap.GetWidth();
-			int lowestY = shipTilemap.GetHeight();
+			int lowestX = shipTilemap.GetXSize();
+			int lowestY = shipTilemap.GetYSize();
 			int highestX = 0;
 			int highestY = 0;
+			
 
 			// remove all empty tiles
-			for (int i = 0; i < shipTilemap.GetWidth(); i++)
+			for (int x = 0; x < shipTilemap.GetXSize(); x++)
 			{
-				for (int j = 0; j < shipTilemap.GetHeight(); j++)
+				for (int y = 0; y < shipTilemap.GetYSize(); y++)
 				{
-					if (shipTilemap.GetTile(i, j) == null) continue;
-
-					if (shipTilemap.GetTile(i, j).tops.Count == 0)
+					bool tileNotEmptyFlag = false;
+					for(int z = 0; z < 10; z++)
 					{
-						shipTilemap.RemoveTile(i, j);
+						if (shipTilemap.GetTile(x, y, z) != null)
+						{
+							tileNotEmptyFlag = true;
+							break;
+						}
 					}
-				}
-			}
 
-			// find the bounds of the actual ship
-			for (int x = 0; x < shipTilemap.GetWidth(); x++)
-			{
-				for (int y = 0; y < shipTilemap.GetHeight(); y++)
-				{
-					Tile tile = shipTilemap.GetTile(x, y);
-					if (tile != null)
+					if (!tileNotEmptyFlag)
+					{
+						shipTilemap.RemoveAllTilesAt(x, y);
+					}
+					else
 					{
 						if (lowestX >= x) lowestX = x;
 						if (lowestY >= y) lowestY = y;
 						if (highestX <= x) highestX = x;
-						if (highestY <= x) highestY = y;
+						if (highestY <= y) highestY = y;
 					}
 				}
 			}
 
-			//Console.WriteLine("Ship: " + GetShipName());
-			//Console.WriteLine("Low X: " + lowestX);
-			//Console.WriteLine("Low Y: " + lowestY);
-			//Console.WriteLine("High X: " + highestX);
-			//Console.WriteLine("High Y: " + highestY);
+			//find the bounds of the actual ship
+			for (int x = 0; x < shipTilemap.GetXSize(); x++)
+			{
+				for (int y = 0; y < shipTilemap.GetYSize(); y++)
+				{
+					for (int z = 0; z < shipTilemap.MaxHeightOfTileMap; z++)
+					{
+						if (shipTilemap.GetTile(x, y, z) != null)
+						{
+							//if (lowestX >= x) lowestX = x;
+							//if (lowestY >= y) lowestY = y;
+							//if (highestX <= x) highestX = x;
+							//if (highestY <= x) highestY = y;
+						}
+					}
+				}
+			}
+
+			Console.WriteLine("Ship: " + GetShipName());
+			Console.WriteLine("Low X: " + lowestX);
+			Console.WriteLine("Low Y: " + lowestY);
+			Console.WriteLine("High X: " + highestX);
+			Console.WriteLine("High Y: " + highestY);
 			
 			int newXSize = highestX - lowestX + 1; 
 			int newYSize = highestY - lowestY + 1;
 
-			TileMap buffer = new TileMap(newXSize, newYSize, this); // Make a new tilemap based on the optimized box.
-			buffer.PlaceTiles(shipTilemap.GetTiles(lowestX, lowestY, highestX, highestY), 0, 0); // get the current unoptimized tilemaps tiles and place them onto the buffer.
+			TileMap buffer = new TileMap(newXSize, newYSize); // Make a new tilemap based on the optimized box.
+			buffer.PasteTiles(shipTilemap.GetTiles(lowestX, lowestY, highestX, highestY), 0, 0); // get the current unoptimized tilemaps tiles and place them onto the buffer.
 			
 			this.shipTilemap = buffer; // set this tilemap to the optimized tilemap.
 			
-			//Console.WriteLine("Ship: " + GetShipName());
-			//Console.WriteLine("X Size: " + shipTilemap.GetWidth());
-			//Console.WriteLine("Y Size: " + shipTilemap.GetHeight());
+			Console.WriteLine("Ship: " + GetShipName());
+			Console.WriteLine("X Size: " + shipTilemap.GetXSize());
+			Console.WriteLine("Y Size: " + shipTilemap.GetYSize());
 
 			buffer = null; // Dispose of the buffer so that the trash collector can take care of the empty object.
 
