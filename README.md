@@ -2,6 +2,8 @@
 
 Welcome! This is a project that is heavily inspired by Space Station 13. I've played SS13 for years, and while it's an excellent game with excellent depth, I feel it needs some reworking. SS13 is still based on the Byond platform which, while clearly good enough for SS13, has some serious issues I won't go into. With that in mind, this is not meant to be a replacement to SS13, but rather a game with a similar style in mind. This is a MonoGame project built in C#. If you'd like to use my code for you're own project, feel free! I'm just here for some fun.
 
+Also, I'm going to be honest, I don't have much experience with working github and other people. If you feel like I should add something or just have questions in general, feel free to send me a message!
+
 ## General Roadmap
 
 This is a living roadmap that is subject to change (primarily as the game gets more in-depth):
