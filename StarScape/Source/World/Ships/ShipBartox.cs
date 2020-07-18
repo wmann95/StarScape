@@ -47,14 +47,14 @@ namespace StarScape.Source.World.Ships
 					if(x == 0 || x == shipWidth - 1 || y == 0 || y == shipHeight - 1)
 					{
 						
-						map.PlaceTile(new TileHull(x, y), true);
-						map.PlaceTile(new TileWall(x, y), true);
+						//map.PlaceTile(new TileHull(x, y), true);
+						//map.PlaceTile(new TileWall(x, y), true);
 					}
 					else
 					{
 
-						map.PlaceTile(new TileHull(x, y), true);
-						map.PlaceTile(new TileFloor(x, y), true);
+						//map.PlaceTile(new TileHull(x, y), true);
+						//map.PlaceTile(new TileFloor(x, y), true);
 					}
 
 				}
