@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StarScape.Source.World.Tiles.Atmospherics;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles
 {
 	public class TileSpace : ITile
 	{
-		public static float AtmosphereEscapeRate = 5000;
 
 		public TileMap ParentTileMap { get { return null; } set { } }
 
@@ -23,13 +18,14 @@ namespace StarScape.Source.World.Tiles
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
 
-		public static int TileLayer = 0;
+		public int TileLayer { get; private set; }
 
 		public List<IAttribute> Attributes { get; private set; }
 
 		public TileSpace()
 		{
 			Attributes = new List<IAttribute>();
+			TileLayer = 0;
 		}
 
 		public int GetTileLayer()

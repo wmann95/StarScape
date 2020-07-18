@@ -83,15 +83,13 @@
     <Compile Include="Source\World\Tiles\Tile.cs" />
     <Compile Include="Source\World\Tiles\TileMap.cs" />
     <Compile Include="Source\World\Tiles\TileSpace.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Attributes\AttAirtight.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Attributes\IAttributable.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Attributes\IAttribute.cs" />
-    <Compile Include="Source\World\Tiles\Tops\ITop.cs" />
-    <Compile Include="Source\World\Tiles\Tops\Top.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TileDoor.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TileFloor.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TileHull.cs" />
-    <Compile Include="Source\World\Tiles\Tops\TileWall.cs" />
+    <Compile Include="Source\World\Tiles\Attributes\AttAirtight.cs" />
+    <Compile Include="Source\World\Tiles\Attributes\IAttributable.cs" />
+    <Compile Include="Source\World\Tiles\Attributes\IAttribute.cs" />
+    <Compile Include="Source\World\Tiles\TileDoor.cs" />
+    <Compile Include="Source\World\Tiles\TileFloor.cs" />
+    <Compile Include="Source\World\Tiles\TileHull.cs" />
+    <Compile Include="Source\World\Tiles\TileWall.cs" />
     <Compile Include="Source\World\World.cs" />
   </ItemGroup>
   <ItemGroup>

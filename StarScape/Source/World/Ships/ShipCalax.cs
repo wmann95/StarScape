@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using StarScape.Source.World.Tiles;
 using StarScape.Source.World.Tiles.Machinery;
 using StarScape.Source.World.Tiles.Tops;
-using StarScape.Source.World.Tiles.Tops.Attributes;
 
 namespace StarScape.Source.World.Ships
 {
@@ -28,7 +27,7 @@ namespace StarScape.Source.World.Ships
 
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(50, 50);
+			TileMap temp = new TileMap(20, 20);
 
 			GenerateShip(temp);
 
@@ -44,34 +43,22 @@ namespace StarScape.Source.World.Ships
 			int shipWidth = map.GetXSize();
 			int shipHeight = map.GetYSize();
 
-			int scale = 1;
+			int scale = 20;
 
-			Ship.BuildRoom(map, 1 * scale, 0, 4 * scale, 10 * scale);
-			Ship.BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
-			Ship.BuildRoom(map, 4 * scale, 0, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 8 * scale, 0, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
-			Ship.BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
+			BuildRoom(map, 0, 0, 1 * scale, 1 * scale);
+			//BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
+			//BuildRoom(map, 4 * scale, 0, 5 * scale, 4 * scale);
+			//BuildRoom(map, 8 * scale, 0, 5 * scale, 4 * scale);
+			//BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
+			//BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
 
-			for (int i = 0; i < map.GetXSize(); i++)
-			{
-				for (int j = 0; j < map.GetYSize(); j++)
-				{
-					for (int k = 0; k < map.MaxHeightOfTileMap; k++)
-					{
-						if (map.GetTile(i, j, k) != null) Debug.Log(map.GetTile(i, j, k));
-					}
-				}
-			}
+			//map.RemoveTile(19, 9, 5);
+			//map.RemoveTile(19, 10, 5);
 
-			if (map.GetTile(0, 0, TileWall.TileLayer) != null)
-			{
-				map.RemoveTile(0, 0, TileWall.TileLayer);
-			}
-
-			//map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
-			//map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
-			//map.AddTop(9 * scale, 1 * scale, new MachineOxyGen());
+			map.PlaceTile(new MachineOxyGen(2, 2), false);
+			map.PlaceTile(new MachineOxyGen(17, 2), false);
+			map.PlaceTile(new MachineOxyGen(2, 17), false);
+			map.PlaceTile(new MachineOxyGen(17, 17), false);
 
 		}
 		
@@ -91,9 +78,12 @@ namespace StarScape.Source.World.Ships
 
 				flag = false;
 
-				Debug.Log(shipTilemap.GetTile(0, 0, TileWall.TileLayer));
-
-				shipTilemap.RemoveAllTilesAt(1, 1);
+				//Debug.Log(shipTilemap.GetTile(0, 0, 5));
+				
+				shipTilemap.RemoveAllTilesAt(9, 9);
+				shipTilemap.RemoveAllTilesAt(9, 10);
+				shipTilemap.RemoveAllTilesAt(10, 9);
+				shipTilemap.RemoveAllTilesAt(10, 10);
 			}
 
 			//Tile tile = shipTilemap.GetNeighborOfTile(shipTilemap.GetTile(10, 2), 0);

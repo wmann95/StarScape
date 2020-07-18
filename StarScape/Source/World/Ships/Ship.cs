@@ -31,6 +31,7 @@ namespace StarScape.Source.World.Ships
 			shipTilemap = CreateTileMap();
 			OptimizeShip();
 			Position = pos;
+			shipTilemap.SetAtmospheresDirty();
 		}
 
 		public new string ToString()

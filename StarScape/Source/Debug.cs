@@ -20,12 +20,7 @@ namespace StarScape.Source
 
 		public static void Log<T>(T t)
 		{
-			string output = "";
-
-			if (t == null) output = "Null";
-			else t.ToString();
-
-			Console.WriteLine( output );
+			Console.WriteLine( t.ToString() );
 		}
 
 	}

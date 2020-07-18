@@ -9,18 +9,20 @@ using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles.Machinery
 {
-	public class MachineOxyGen : Top, IMachinery
+	public class MachineOxyGen : Tile, IMachinery
 	{
 		public bool IsMachineOn { get; private set; }
 
-		private float airProduction = 25f;
-		private float minAirPressure = 70f;
+		Atmosphere localAtmosphere;
+
+		private float airProduction = 80f;
+		private float minAirPressure = 80f;
 		private float turnOffPressure = Atmosphere.AtmosphericPressure;
 
 		private long turnOnTime = 0;
 		private int stayOnDelay = 5000;
 
-		public MachineOxyGen()
+		public MachineOxyGen(int x, int y) : base (x, y, 6)
 		{
 		}
 
@@ -28,18 +30,26 @@ namespace StarScape.Source.World.Tiles.Machinery
 		{
 			base.Update(gameTime);
 
-			//if (parentTile.atmosphere.airPressure <= minAirPressure)
-			//{
-			//	IsMachineOn = true;
-			//	turnOnTime = Time.gameTime;
-			//}
-			//if (parentTile.atmosphere.airPressure >= turnOffPressure && Time.gameTime - turnOnTime >= stayOnDelay)
-			//{
-			//	IsMachineOn = false;
-//
-			//}
-//
-			//if (IsMachineOn) parentTile.atmosphere.ChangePressure(airProduction);
+			//Debug.Log(xPos + " : "  + yPos);
+
+			if(localAtmosphere == null || localAtmosphere != ParentTileMap.GetAtmosphere(xPos, yPos))
+			{
+				localAtmosphere = ParentTileMap.GetAtmosphere(xPos, yPos);
+				//Debug.Log("Local Atmosphere: " + localAtmosphere.xPos + ", " + localAtmosphere.yPos);
+			}
+
+			if (localAtmosphere.airPressure <= minAirPressure)
+			{
+				IsMachineOn = true;
+				turnOnTime = Time.gameTime;
+			}
+			if (localAtmosphere.airPressure >= turnOffPressure && Time.gameTime - turnOnTime >= stayOnDelay)
+			{
+				IsMachineOn = false;
+
+			}
+
+			if (IsMachineOn) localAtmosphere.ChangePressure(airProduction);
 		}
 	}
 }

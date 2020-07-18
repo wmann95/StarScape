@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Tiles.Atmospherics;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles
 {
@@ -23,23 +23,20 @@ namespace StarScape.Source.World.Tiles
 
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
-		public static int TileLayer { get; }
+		public int TileLayer { get; private set; }
 		
-		public Tile(int x, int y)
+		public Tile(int x, int y, int tileLayer)
 		{
 			this.xPos = x;
 			this.yPos = y;
 			//tops = new List<Top>();
 			Attributes = new List<IAttribute>();
 
+			TileLayer = tileLayer;
+
 			//atmosphere = new Atmosphere(this);
 		}
-
-		public virtual int GetTileLayer()
-		{
-			return TileLayer;
-		}
-
+		
 		public override string ToString()
 		{
 			

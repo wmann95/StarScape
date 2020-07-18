@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace StarScape.Source.World.Tiles.Tops.Attributes
+namespace StarScape.Source.World.Tiles.Attributes
 {
 	/// <summary>
 	/// Blueprint for all attributes. It's intentionally a very simple class.

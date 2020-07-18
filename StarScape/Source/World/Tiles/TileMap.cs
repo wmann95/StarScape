@@ -73,6 +73,17 @@ namespace StarScape.Source.World.Tiles
 			return ref atmosphereMap[x][y];
 		}
 
+		public void SetAtmospheresDirty()
+		{
+			for(int i = 0; i < atmosphereMap.Length; i++)
+			{
+				for (int j = 0; j < atmosphereMap.Length; j++)
+				{
+					atmosphereMap[i][j].setDirty();
+				}
+			}
+		}
+
 		/// <summary>
 		/// Puts a top into a tile using the Tiles AddTop method.
 		/// </summary>
@@ -249,32 +260,29 @@ namespace StarScape.Source.World.Tiles
 			//Console.WriteLine("This tile: " + tiles[x][y].ToString());
 
 			tileMap[x][y][z] = null;
+
+			//atmosphereMap[x][y].setDirty();
 		}
 
 		public void RemoveAllTilesAt(int x, int y)
 		{
-			
-			for (int i = 0; i < 8; i++)
-			{
-				Atmosphere atmos = GetNeighborAtmos(x, y, i);
-				if (atmos != null) atmos.setDirty();
-				//atmosphereMap[x][y].setDirty();
-			}
-
 			for (int i = 0; i < MaxHeightOfTileMap; i++)
 			{
 				RemoveTile(x, y, i);
 			}
+
+			SetAtmospheresDirty();
 		}
 		
 		public void PlaceTile(ITile tile, bool replaceIfNeeded)
 		{
 			if (tile == null) throw new ArgumentException("Tile Cannot Be Null");
 
-			if (GetTile(tile.xPos, tile.yPos, tile.GetTileLayer()) != null || replaceIfNeeded)
+			if (GetTile(tile.xPos, tile.yPos, tile.TileLayer) == null || replaceIfNeeded)
 			{
-				tileMap[tile.xPos][tile.yPos][tile.GetTileLayer()] = tile;
-				//if (tile.GetTexture() == "WallTile1") Debug.Log(tile.GetTileLayer());
+				//Debug.Log(tile.TileLayer);
+				tileMap[tile.xPos][tile.yPos][tile.TileLayer] = tile;
+
 				atmosphereMap[tile.xPos][tile.yPos].setDirty();
 			}
 		}
@@ -434,19 +442,7 @@ namespace StarScape.Source.World.Tiles
 
 			return new Point(xPos + xOffset, yPos + yOffset);
 		}
-
-		public Atmosphere GetNeighborAtmos(int xPos, int yPos, int i)
-		{
-			Point neighborPoint = GetNeighborPosition(xPos, yPos, i);
-			
-			if(neighborPoint == new Point(-1, -1))
-			{
-				return null;
-			}
-
-			return atmosphereMap[neighborPoint.X][neighborPoint.Y];
-
-		}
+		
 
 	}
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles.Atmospherics
 {
@@ -62,6 +62,8 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 
 			previousAirPressure = airPressure;
 			airPressure += amount;
+
+			if (airPressure < 0) airPressure = 0;
 		}
 
 		/// <summary>
@@ -90,6 +92,7 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 		public void Update(GameTime gameTime)
 		{
 
+
 			if (previousAirPressure != airPressure || isTileAtmosphereDirty)
 			{
 				float totalChange = 0; // the total air pressure change as summed from all neighbors.
@@ -99,16 +102,24 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 					if (ParentTileMap.GetTile(xPos, yPos, i) == null) continue;
 					if (ParentTileMap.GetTile(xPos, yPos, i).HasAttribute<AttAirtight>())
 					{
-						//Debug.Log("Neighbor is airtight.");
 						this.canChangePressure = false;
+						return;
 					}
 				}
 
 				for (int i = 0; i < 8; i++)
 				{
-					Atmosphere neighborAtmos = ParentTileMap.GetNeighborAtmos(xPos, yPos, i);
+					Point neighborPoint = ParentTileMap.GetNeighborPosition(xPos, yPos, i);
 
-					if (neighborAtmos == null || !neighborAtmos.canChangePressure) continue;
+					if(neighborPoint == new Point(-1, -1))
+					{
+						totalChange = DecayFactor * airPressure;
+						continue;
+					}
+
+					Atmosphere neighborAtmos = ParentTileMap.GetAtmosphere(neighborPoint.X, neighborPoint.Y);
+
+					if (!neighborAtmos.canChangePressure) continue;
 					
 					float deltaP = airPressure - neighborAtmos.airPressure;
 					
@@ -124,6 +135,8 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 				if (canChangePressure) {
 					ChangePressure(totalChange);
 				}
+
+				//isTileAtmosphereDirty = false;
 				 // Air calculations complete, this tile is clean.
 
 				/*

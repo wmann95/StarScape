@@ -7,7 +7,7 @@ using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles.Machinery
 {
-	interface IMachinery
+	interface IMachinery : ITile
 	{
 		bool IsMachineOn { get; }
 		

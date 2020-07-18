@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+﻿using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles.Tops
 {
@@ -12,10 +7,8 @@ namespace StarScape.Source.World.Tiles.Tops
 	/// </summary>
 	public class TileWall : Tile
 	{
-
-		public new static int TileLayer = 5;
-
-		public TileWall(int x, int y) : base(x, y)
+		
+		public TileWall(int x, int y) : base(x, y, 5)
 		{
 			AddAttribute(new AttAirtight());
 		}

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using StarScape.Source.World.Tiles;
 using StarScape.Source.World.Tiles.Tops;
-using StarScape.Source.World.Tiles.Tops.Attributes;
 
 namespace StarScape.Source.World.Ships
 {

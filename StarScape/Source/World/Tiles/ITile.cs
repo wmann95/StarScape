@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles
 {
@@ -16,9 +16,9 @@ namespace StarScape.Source.World.Tiles
 		
 		int xPos { get; set; }
 		int yPos { get; set; }
+		int TileLayer { get; }
 
 		string GetTexture();
-		int GetTileLayer();
 
 		void LoadContent();
 

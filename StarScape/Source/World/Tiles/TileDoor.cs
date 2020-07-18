@@ -13,15 +13,14 @@ namespace StarScape.Source.World.Tiles
 	/// </summary>
 	public class TileDoor : Tile
 	{
-
-		public static new int TileLayer = 6;
+		
 
 		enum DoorType { BasicDoor }
 
 		//Deprecated: When I wrote this, I realized I could do this in the LoadHelper class to help optimize loading, and this is now obsolete.
 		//Dictionary<int, Texture2D> doorTextures = new Dictionary<int, Texture2D>();
 
-		public TileDoor(int x, int y) : base(x, y)
+		public TileDoor(int x, int y) : base(x, y, 6)
 		{
 			
 		}

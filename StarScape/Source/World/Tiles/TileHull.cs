@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using StarScape.Source.World.Tiles.Tops.Attributes;
+﻿
 
 namespace StarScape.Source.World.Tiles.Tops
 {
@@ -15,9 +8,7 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TileHull : Tile
 	{
 
-		public new static int TileLayer = 1;
-
-		public TileHull(int x, int y) : base (x, y)
+		public TileHull(int x, int y) : base (x, y, 1)
 		{
 			//this.AddAttribute(new AttAirPressure()); // This is just a test thing... hulls won't come with added air pressure on installing.
 		}
