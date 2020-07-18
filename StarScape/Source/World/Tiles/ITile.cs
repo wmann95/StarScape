@@ -16,9 +16,9 @@ namespace StarScape.Source.World.Tiles
 		
 		int xPos { get; set; }
 		int yPos { get; set; }
-		int TileLayer { get; }
 
 		string GetTexture();
+		int GetTileLayer();
 
 		void LoadContent();
 

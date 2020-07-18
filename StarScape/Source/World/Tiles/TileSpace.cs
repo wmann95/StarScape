@@ -23,13 +23,18 @@ namespace StarScape.Source.World.Tiles
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
 
-		public int TileLayer { get { return 0; } }
+		public static int TileLayer = 0;
 
 		public List<IAttribute> Attributes { get; private set; }
 
 		public TileSpace()
 		{
 			Attributes = new List<IAttribute>();
+		}
+
+		public int GetTileLayer()
+		{
+			return 0;
 		}
 
 		public void AddAttribute<IAttribute>(IAttribute attribute)

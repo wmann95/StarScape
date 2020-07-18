@@ -243,7 +243,7 @@ namespace StarScape.Source.World.Tiles
 				tileMap[x][y][z] = new TileSpace();
 				atmosphereMap[x][y] = new Atmosphere(this, x, y, 0);
 				atmosphereMap[x][y].canChangePressure = false;
-				Debug.Log("i is: " + z + ", Create space at: " + x + ", " + y);
+				//Debug.Log("i is: " + z + ", Create space at: " + x + ", " + y);
 				return;
 			}
 			//Console.WriteLine("This tile: " + tiles[x][y].ToString());
@@ -271,9 +271,10 @@ namespace StarScape.Source.World.Tiles
 		{
 			if (tile == null) throw new ArgumentException("Tile Cannot Be Null");
 
-			if (GetTile(tile.xPos, tile.yPos, tile.TileLayer) != null || replaceIfNeeded)
+			if (GetTile(tile.xPos, tile.yPos, tile.GetTileLayer()) != null || replaceIfNeeded)
 			{
-				tileMap[tile.xPos][tile.yPos][tile.TileLayer] = tile;
+				tileMap[tile.xPos][tile.yPos][tile.GetTileLayer()] = tile;
+				//if (tile.GetTexture() == "WallTile1") Debug.Log(tile.GetTileLayer());
 				atmosphereMap[tile.xPos][tile.yPos].setDirty();
 			}
 		}
@@ -309,8 +310,8 @@ namespace StarScape.Source.World.Tiles
 						inTiles[i][j][k].xPos = i + xPos;
 						inTiles[i][j][k].yPos = j + yPos;
 
-						Debug.Log(inTiles[i][j][k].xPos);
-						Debug.Log(inTiles[i][j][k].yPos);
+						//Debug.Log(inTiles[i][j][k].xPos);
+						//Debug.Log(inTiles[i][j][k].yPos);
 
 						PlaceTile(inTiles[i][j][k], true);
 

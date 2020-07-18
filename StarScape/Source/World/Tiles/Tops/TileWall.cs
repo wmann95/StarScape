@@ -13,12 +13,13 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TileWall : Tile
 	{
 
-		public override int TileLayer { get { return 5; } }
+		public new static int TileLayer = 5;
 
 		public TileWall(int x, int y) : base(x, y)
 		{
 			AddAttribute(new AttAirtight());
 		}
+		
 
 		public override string GetTexture()
 		{

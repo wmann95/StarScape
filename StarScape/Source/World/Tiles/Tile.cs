@@ -23,7 +23,7 @@ namespace StarScape.Source.World.Tiles
 
 		public int xPos { get; set; }//{ get; private set; }
 		public int yPos { get; set; }//{ get; private set; }
-		public abstract int TileLayer { get; }
+		public static int TileLayer { get; }
 		
 		public Tile(int x, int y)
 		{
@@ -34,8 +34,12 @@ namespace StarScape.Source.World.Tiles
 
 			//atmosphere = new Atmosphere(this);
 		}
-		
-		
+
+		public virtual int GetTileLayer()
+		{
+			return TileLayer;
+		}
+
 		public override string ToString()
 		{
 			

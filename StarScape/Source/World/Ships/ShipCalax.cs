@@ -53,7 +53,21 @@ namespace StarScape.Source.World.Ships
 			Ship.BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
 			Ship.BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
 
-			//if(map.GetTile())
+			for (int i = 0; i < map.GetXSize(); i++)
+			{
+				for (int j = 0; j < map.GetYSize(); j++)
+				{
+					for (int k = 0; k < map.MaxHeightOfTileMap; k++)
+					{
+						if (map.GetTile(i, j, k) != null) Debug.Log(map.GetTile(i, j, k));
+					}
+				}
+			}
+
+			if (map.GetTile(0, 0, TileWall.TileLayer) != null)
+			{
+				map.RemoveTile(0, 0, TileWall.TileLayer);
+			}
 
 			//map.AddTop(2 * scale, 1 * scale, new MachineOxyGen());
 			//map.AddTop(5 * scale, 1 * scale, new MachineOxyGen());
@@ -76,6 +90,8 @@ namespace StarScape.Source.World.Ships
 			{
 
 				flag = false;
+
+				Debug.Log(shipTilemap.GetTile(0, 0, TileWall.TileLayer));
 
 				shipTilemap.RemoveAllTilesAt(1, 1);
 			}

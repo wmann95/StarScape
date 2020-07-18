@@ -14,7 +14,7 @@ namespace StarScape.Source.World.Tiles
 	public class TileDoor : Tile
 	{
 
-		public override int TileLayer { get { return 6; } }
+		public static new int TileLayer = 6;
 
 		enum DoorType { BasicDoor }
 

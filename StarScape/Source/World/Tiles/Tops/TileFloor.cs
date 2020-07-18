@@ -18,12 +18,12 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TileFloor : Tile
 	{
 
+		public static new int TileLayer = 5;
+
 		public TileFloor(int x, int y) : base(x, y)
 		{
 		}
-
-		public override int TileLayer { get { return 5; } }
-
+		
 		public override string GetTexture()
 		{
 			return "FloorTile1";

@@ -51,28 +51,6 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 
 			isTileAtmosphereDirty = true;
 		}
-
-		public Atmosphere(int x, int y, float initialPressure)
-		{
-			ParentTileMap = null;
-			xPos = x;
-			yPos = y;
-			airPressure = initialPressure;
-
-			canChangePressure = true;
-			isTileAtmosphereDirty = false;
-		}
-
-		public Atmosphere(float initialPressure)
-		{
-			ParentTileMap = null;
-			xPos = 0;
-			yPos = 0;
-			airPressure = initialPressure;
-
-			canChangePressure = true;
-			isTileAtmosphereDirty = false;
-		}
 		
 		/// <summary>
 		/// Changes this atmosphere's pressure.

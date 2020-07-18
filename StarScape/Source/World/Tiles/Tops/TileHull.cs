@@ -15,13 +15,13 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TileHull : Tile
 	{
 
-		public override int TileLayer { get { return 2; } }
+		public new static int TileLayer = 1;
 
 		public TileHull(int x, int y) : base (x, y)
 		{
 			//this.AddAttribute(new AttAirPressure()); // This is just a test thing... hulls won't come with added air pressure on installing.
 		}
-
+		
 		public override string GetTexture()
 		{
 			return "HullTile1";
