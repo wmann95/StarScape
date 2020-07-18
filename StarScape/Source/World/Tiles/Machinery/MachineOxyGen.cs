@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Tiles.Atmospherics;
-using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles.Machinery
 {
 	public class MachineOxyGen : Tile, IMachinery
 	{
+
+		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture(null); } }
+
+		//TODO: Add a texture to this machine.
+		//public new static int TextureID = LoadHelper.LoadTexture("HullTile1");
+
 		public bool IsMachineOn { get; private set; }
 
 		Atmosphere localAtmosphere;

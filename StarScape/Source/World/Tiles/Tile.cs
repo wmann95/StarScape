@@ -14,8 +14,8 @@ namespace StarScape.Source.World.Tiles
 	{
 		//public Atmosphere atmosphere;
 
-		public int TileTextureID { get; protected set; } // if the tile texture ID remains one, the tile obviously hasn't had the texture loaded.
-		public string TextureName { get; protected set; }
+		public abstract Texture2D TileTexture { get; }
+		
 		public TileMap ParentTileMap { get; set; }
 		//public List<Top> tops { get; private set; } //the first index should be the bottom, so usually a hull if it's on a ship.
 
@@ -42,12 +42,7 @@ namespace StarScape.Source.World.Tiles
 			
 			return "TilePosition: <" + xPos + ", " + yPos + ">";
 		}
-
-		public virtual string GetTexture()
-		{
-			return "UndefinedTexture";
-		}
-
+		
 		public void LoadFromFile() { } // Placeholder for getting tile information from a save file or what have you. Haven't gotten into that yet, hence the emptyness.
 
 		/// <summary>
@@ -61,7 +56,7 @@ namespace StarScape.Source.World.Tiles
 				t.LoadContent();
 			}
 			*/
-			TileTextureID = LoadHelper.LoadTexture(GetTexture());
+			//TileTextureID = LoadHelper.LoadTexture(GetTexture());
 			
 		}
 
@@ -71,9 +66,9 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="batch"></param>
 		public virtual void Draw(SpriteBatch batch)
 		{
-			if (TileTextureID != -1)
+			if (TileTexture != null)
 			{
-				batch.Draw(LoadHelper.GetTexture(TileTextureID)/*Get the texture from the ID*/,
+				batch.Draw(TileTexture/*Get the texture from the ID*/,
 					(new Vector2(xPos, yPos) * 64 /*each tile texture is 64px wide.*/) + ParentTileMap.Position /*add the ship position offset*/,
 					Color.White /*this is used for tinting.*/);
 			}

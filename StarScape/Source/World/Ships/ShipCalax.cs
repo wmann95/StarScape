@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using StarScape.Source.World.Tiles;
 using StarScape.Source.World.Tiles.Machinery;
-using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Ships
 {
@@ -55,10 +54,6 @@ namespace StarScape.Source.World.Ships
 			//map.RemoveTile(19, 9, 5);
 			//map.RemoveTile(19, 10, 5);
 
-			map.PlaceTile(new MachineOxyGen(2, 2), false);
-			map.PlaceTile(new MachineOxyGen(17, 2), false);
-			map.PlaceTile(new MachineOxyGen(2, 17), false);
-			map.PlaceTile(new MachineOxyGen(17, 17), false);
 
 		}
 		
@@ -84,6 +79,11 @@ namespace StarScape.Source.World.Ships
 				shipTilemap.RemoveAllTilesAt(9, 10);
 				shipTilemap.RemoveAllTilesAt(10, 9);
 				shipTilemap.RemoveAllTilesAt(10, 10);
+
+				shipTilemap.PlaceTile(new MachineOxyGen(2, 2), false);
+				shipTilemap.PlaceTile(new MachineOxyGen(17, 2), false);
+				shipTilemap.PlaceTile(new MachineOxyGen(2, 17), false);
+				shipTilemap.PlaceTile(new MachineOxyGen(17, 17), false);
 			}
 
 			//Tile tile = shipTilemap.GetNeighborOfTile(shipTilemap.GetTile(10, 2), 0);

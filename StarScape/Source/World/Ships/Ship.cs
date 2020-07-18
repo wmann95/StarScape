@@ -8,7 +8,6 @@ using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Tiles;
-using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Ships
 {

@@ -1,6 +1,8 @@
 ﻿
 
-namespace StarScape.Source.World.Tiles.Tops
+using Microsoft.Xna.Framework.Graphics;
+
+namespace StarScape.Source.World.Tiles
 {
 	/// <summary>
 	/// Essentially a placeholder tile that designates a tile as part of the ship.
@@ -8,14 +10,11 @@ namespace StarScape.Source.World.Tiles.Tops
 	public class TileHull : Tile
 	{
 
+		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture("HullTile1"); } }
+
 		public TileHull(int x, int y) : base (x, y, 1)
 		{
 			//this.AddAttribute(new AttAirPressure()); // This is just a test thing... hulls won't come with added air pressure on installing.
-		}
-		
-		public override string GetTexture()
-		{
-			return "HullTile1";
 		}
 		
 	}

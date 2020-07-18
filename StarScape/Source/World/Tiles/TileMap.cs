@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Ships;
 using StarScape.Source.World.Tiles.Atmospherics;
-using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World.Tiles
 {
@@ -22,7 +21,8 @@ namespace StarScape.Source.World.Tiles
 		ITile[][][] tileMap;
 		//Tile[][] testMap;
 		Atmosphere[][] atmosphereMap;
-		public int atmosphereTexID;
+
+		public Texture2D AtmosphereTexture { get { return LoadHelper.LoadTexture("AtmosphereOverlay"); } }
 
 		public Vector2 Position { get; set; }
 
@@ -142,7 +142,6 @@ namespace StarScape.Source.World.Tiles
 					}
 				}
 			}
-			atmosphereTexID = LoadHelper.LoadTexture("AtmosphereOverlay");
 		}
 
 		public ITile[][][] ToArray()
@@ -187,32 +186,34 @@ namespace StarScape.Source.World.Tiles
 					}
 				}
 			}
-			
-			foreach(Atmosphere[] aArray in atmosphereMap)
+
+			if (true)
 			{
-				foreach(Atmosphere atmos in aArray)
+				foreach (Atmosphere[] aArray in atmosphereMap)
 				{
-					float pressureColor = atmos.airPressure / Atmosphere.AtmosphericPressure;
-
-					Color color;// = new Color(255, 255, 255);
-					float opacity = 0f;
-					//Console.WriteLine(pressureColor);
-
-					if (pressureColor > 1)
+					foreach (Atmosphere atmos in aArray)
 					{
-						color = new Color(1 / pressureColor, 1 / pressureColor, 1f);
-					}
-					else
-					{
-						color = new Color(1f, pressureColor, pressureColor);
-					}
+						float pressureColor = atmos.airPressure / Atmosphere.AtmosphericPressure;
 
-					//if (atmos.isTileAtmosphereDirty) color = Color.Purple;
+						Color color;// = new Color(255, 255, 255);
+						float opacity = 0f;
+						//Console.WriteLine(pressureColor);
 
-					batch.Draw(LoadHelper.GetTexture(atmosphereTexID), new Vector2(atmos.xPos, atmos.yPos) * 64 + Position, color * 0.5f);
+						if (pressureColor > 1)
+						{
+							color = new Color(1 / pressureColor, 1 / pressureColor, 1f);
+						}
+						else
+						{
+							color = new Color(1f, pressureColor, pressureColor);
+						}
+
+						//if (atmos.isTileAtmosphereDirty) color = Color.Purple;
+
+						batch.Draw(AtmosphereTexture, new Vector2(atmos.xPos, atmos.yPos) * 64 + Position, color * 0.5f);
+					}
 				}
 			}
-
 		}
 
 		/// <summary>
@@ -282,7 +283,7 @@ namespace StarScape.Source.World.Tiles
 			{
 				//Debug.Log(tile.TileLayer);
 				tileMap[tile.xPos][tile.yPos][tile.TileLayer] = tile;
-
+				tileMap[tile.xPos][tile.yPos][tile.TileLayer].ParentTileMap = this;
 				atmosphereMap[tile.xPos][tile.yPos].setDirty();
 			}
 		}

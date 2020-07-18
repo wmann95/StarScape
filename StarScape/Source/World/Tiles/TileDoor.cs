@@ -13,7 +13,7 @@ namespace StarScape.Source.World.Tiles
 	/// </summary>
 	public class TileDoor : Tile
 	{
-		
+		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture(null); } }
 
 		enum DoorType { BasicDoor }
 
@@ -25,9 +25,5 @@ namespace StarScape.Source.World.Tiles
 			
 		}
 		
-		public override string GetTexture()
-		{
-			return "TopFloor1";
-		}
 	}
 }

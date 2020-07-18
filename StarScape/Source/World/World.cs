@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StarScape.Source.Rendering;
 using StarScape.Source.World.Ships;
-using StarScape.Source.World.Tiles.Tops;
 
 namespace StarScape.Source.World
 {
