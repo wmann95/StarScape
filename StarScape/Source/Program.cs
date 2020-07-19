@@ -10,7 +10,7 @@ namespace StarScape
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
             using (var game = new MainGame())

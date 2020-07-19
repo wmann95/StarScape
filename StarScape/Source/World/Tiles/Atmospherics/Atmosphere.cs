@@ -19,7 +19,7 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 		public int yPos { get; set; }
 		
 		public static readonly float AtmosphericPressure = 101.325f; // Atmospheric Pressure Constant in Kilopascals (KPa)
-		static readonly float DecayFactor = 0.25f; // The rate of decay that air undergoes during pressure calculations.
+		static readonly float DecayFactor = 0.3f; // The rate of decay that air undergoes during pressure calculations.
 
 		public float airPressure { get; private set; } // this tiles air pressure.
 		private float previousAirPressure { get; set; } // the air pressure of the previous update.
@@ -69,11 +69,16 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 		/// <summary>
 		/// Tells this atmosphere to not change pressure. Also tells other atmospheres to skip this atmosphere for calculations.
 		/// </summary>
-		public void SetAirtight()
+		public void SetAirtight(bool airtight)
 		{
-			this.airPressure = AtmosphericPressure;
-			this.previousAirPressure = AtmosphericPressure;
-			this.canChangePressure = false;
+			if (airtight)
+			{
+				canChangePressure = false;
+			}
+			else
+			{
+				canChangePressure = true;
+			}
 		}
 
 		/// <summary>
@@ -81,6 +86,14 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 		/// </summary>
 		public void setDirty()
 		{
+			if(ParentTileMap.GetTile(xPos, yPos, 0) != null)
+			{
+				if (ParentTileMap.GetTile(xPos, yPos, 0) is TileSpace)
+				{
+					SetAirtight(false);
+				}
+			}
+
 			isTileAtmosphereDirty = true;
 		}
 
@@ -91,21 +104,19 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
-
-
+			
 			if (previousAirPressure != airPressure || isTileAtmosphereDirty)
 			{
 				float totalChange = 0; // the total air pressure change as summed from all neighbors.
 
-				for (int i = 0; i < ParentTileMap.MaxHeightOfTileMap; i++)
-				{
-					if (ParentTileMap.GetTile(xPos, yPos, i) == null) continue;
-					if (ParentTileMap.GetTile(xPos, yPos, i).HasAttribute<AttAirtight>())
+				//Check if the tile below is now space
+				if(ParentTileMap.GetTile(xPos, yPos, 0) != null){
+					if(ParentTileMap.GetTile(xPos, yPos, 0) is TileSpace)
 					{
-						this.canChangePressure = false;
-						return;
+						ChangePressure(-DecayFactor * airPressure);
 					}
 				}
+				
 
 				for (int i = 0; i < 8; i++)
 				{
@@ -129,74 +140,15 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 						
 					neighborAtmos.setDirty();
 
-					if (Math.Abs(deltaP) <= 0.001f) this.isTileAtmosphereDirty = false;
+					if (Math.Abs(deltaP) <= 0.01f) this.isTileAtmosphereDirty = false;
 				}
 
 				if (canChangePressure) {
 					ChangePressure(totalChange);
 				}
-
-				//isTileAtmosphereDirty = false;
-				 // Air calculations complete, this tile is clean.
-
-				/*
-				if (previousAirPressure != airPressure || isTileAtmosphereDirty)
-				{
-					float totalChange = 0; // the total air pressure change as summed from all neighbors.
-
-					for(int i = 0; i < ParentTileMap.MaxHeightOfTileMap; i++)
-					{
-						if (ParentTileMap.GetTile(xPos, yPos, i) == null) continue;
-						if (ParentTileMap.GetTile(xPos, yPos, i).HasAttribute<AttAirtight>())
-						{
-							Debug.Log("Neighbor is airtight.");
-							this.canChangePressure = false;
-						}
-					}
-
-					for (int i = 0; i < 8; i++)
-					{
-						Point neighborPos = ParentTileMap.GetNeighborPosition(xPos, yPos, i);
-
-
-						if(neighborPos == new Point(-1, -1))
-						{
-							totalChange += -DecayFactor * 1000f;//TileSpace.AtmosphereEscapeRate;
-							continue;
-						}
-						else if (ParentTileMap.GetTile(xPos, yPos, 0) is TileSpace)
-						{
-							totalChange += -DecayFactor * 1000f;//TileSpace.AtmosphereEscapeRate;
-							continue;
-						}
-
-						ref Atmosphere neighborAtmos = ref ParentTileMap.GetAtmosphere(neighborPos.X, neighborPos.Y);
-						Debug.Log("xPos: " + xPos + ", yPos: " + yPos + ", Neighbor index: " + i + ", Neighbor Pressure: " + neighborAtmos.airPressure);
-
-
-						float deltaP = airPressure - neighborAtmos.airPressure;
-
-						if (!(Math.Abs(deltaP) <= 0.01f))
-						//{
-						//	airPressure = tile.atmosphere.airPressure;
-						//}
-						//else
-						{
-							totalChange += -DecayFactor * deltaP;
-							neighborAtmos.setDirty(); // lets the neighbor know it should recalculate things, as this tile has changed and is attached to it.
-
-						}
-
-					}
-
-					//Debug.Log(totalChange);
-					if(canChangePressure) ChangePressure(totalChange);
-
-					isTileAtmosphereDirty = false; // Air calculations complete, this tile is clean.
-
-				}
-				*/
+				isTileAtmosphereDirty = false;
 			}
+
 		}
 	}
 }

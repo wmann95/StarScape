@@ -13,6 +13,7 @@ namespace StarScape.Source.World.Tiles.Machinery
 	{
 
 		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture(null); } }
+		public override bool DoesTextureHaveTransparency { get { return true; } }
 
 		//TODO: Add a texture to this machine.
 		//public new static int TextureID = LoadHelper.LoadTexture("HullTile1");

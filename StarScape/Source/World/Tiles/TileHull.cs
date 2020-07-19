@@ -11,6 +11,7 @@ namespace StarScape.Source.World.Tiles
 	{
 
 		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture("HullTile1"); } }
+		public override bool DoesTextureHaveTransparency { get { return false; } }
 
 		public TileHull(int x, int y) : base (x, y, 1)
 		{

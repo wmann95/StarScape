@@ -22,8 +22,21 @@ namespace StarScape.Source.World.Tiles
 
 		public List<IAttribute> Attributes { get; private set; }
 
+		public Texture2D TileTexture { get { return null; } }
+
+		public bool DoesTextureHaveTransparency { get { return true; } }
+
 		public TileSpace()
 		{
+			Attributes = new List<IAttribute>();
+			TileLayer = 0;
+		}
+
+		public TileSpace(int x, int y)
+		{
+			xPos = x;
+			yPos = y;
+
 			Attributes = new List<IAttribute>();
 			TileLayer = 0;
 		}

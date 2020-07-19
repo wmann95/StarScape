@@ -15,6 +15,7 @@ namespace StarScape.Source.World.Tiles
 		//public Atmosphere atmosphere;
 
 		public abstract Texture2D TileTexture { get; }
+		public abstract bool DoesTextureHaveTransparency { get; }
 		
 		public TileMap ParentTileMap { get; set; }
 		//public List<Top> tops { get; private set; } //the first index should be the bottom, so usually a hull if it's on a ship.

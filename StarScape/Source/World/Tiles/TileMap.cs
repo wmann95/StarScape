@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StarScape.Source.World.Ships;
 using StarScape.Source.World.Tiles.Atmospherics;
+using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles
 {
@@ -30,7 +31,7 @@ namespace StarScape.Source.World.Tiles
 		{
 			get
 			{
-				return 64;
+				return 32;
 			}
 		}
 
@@ -166,6 +167,8 @@ namespace StarScape.Source.World.Tiles
 			return buffer;
 		}
 
+		public bool DrawOptimizationTest = false;
+
 		/// <summary>
 		/// This method is called during the draw phase.
 		/// </summary>
@@ -175,18 +178,38 @@ namespace StarScape.Source.World.Tiles
 			{
 				foreach (ITile[] yIndex in xIndex)
 				{
-					foreach (ITile zIndex in yIndex)
-					{
-						if (zIndex == null) continue;
+					int[] layerArray = new int[MaxHeightOfTileMap];
+					int layersToRenderCount = 0;
 
-						zIndex.Draw(batch);
-						//batch.Draw(LoadHelper.GetTexture(zIndex.TileTextureID)/*Get the texture from the ID*/,
-						//	(new Vector2(zIndex.xPos, zIndex.yPos) * 64 /*each tile texture is 64px wide.*/) + Position /*add the ship position offset*/,
-						//	Color.White /*this is used for tinting.*/); ;
+					for(int z = MaxHeightOfTileMap - 1; z >= 0; z--)
+					{
+						if (yIndex[z] == null) continue;
+
+						if (yIndex[z].DoesTextureHaveTransparency)
+						{
+							layerArray[layersToRenderCount++] = z;
+						}
+						else
+						{
+							layerArray[layersToRenderCount++] = z;
+							break;
+						}
 					}
+
+					for(int i = 0; i < layersToRenderCount; i++)
+					{
+						yIndex[layerArray[i]].Draw(batch);
+					}
+
+					//foreach (ITile zIndex in yIndex)
+					//{
+					//	if (zIndex == null) continue;
+					//
+					//	zIndex.Draw(batch);
+					//}
 				}
 			}
-
+			
 			if (true)
 			{
 				foreach (Atmosphere[] aArray in atmosphereMap)
@@ -196,7 +219,7 @@ namespace StarScape.Source.World.Tiles
 						float pressureColor = atmos.airPressure / Atmosphere.AtmosphericPressure;
 
 						Color color;// = new Color(255, 255, 255);
-						float opacity = 0f;
+						float opacity = 0.5f;
 						//Console.WriteLine(pressureColor);
 
 						if (pressureColor > 1)
@@ -210,7 +233,7 @@ namespace StarScape.Source.World.Tiles
 
 						//if (atmos.isTileAtmosphereDirty) color = Color.Purple;
 
-						batch.Draw(AtmosphereTexture, new Vector2(atmos.xPos, atmos.yPos) * 64 + Position, color * 0.5f);
+						batch.Draw(AtmosphereTexture, new Vector2(atmos.xPos, atmos.yPos) * 64 + Position, color * opacity);
 					}
 				}
 			}
@@ -250,11 +273,10 @@ namespace StarScape.Source.World.Tiles
 		/// <param name="y"></param>
 		public void RemoveTile(int x, int y, int z)
 		{
-			if(z == 0)
+			if(z == 0 || z == 1) // If you're removing the base ground or the hull, just return space.
 			{
 				tileMap[x][y][z] = new TileSpace();
-				atmosphereMap[x][y] = new Atmosphere(this, x, y, 0);
-				atmosphereMap[x][y].canChangePressure = false;
+				atmosphereMap[x][y].setDirty();
 				//Debug.Log("i is: " + z + ", Create space at: " + x + ", " + y);
 				return;
 			}
@@ -272,19 +294,30 @@ namespace StarScape.Source.World.Tiles
 				RemoveTile(x, y, i);
 			}
 
-			SetAtmospheresDirty();
+			//SetAtmospheresDirty();
 		}
 		
 		public void PlaceTile(ITile tile, bool replaceIfNeeded)
 		{
 			if (tile == null) throw new ArgumentException("Tile Cannot Be Null");
+			if (tile is TileSpace) RemoveAllTilesAt(tile.xPos, tile.yPos);
 
 			if (GetTile(tile.xPos, tile.yPos, tile.TileLayer) == null || replaceIfNeeded)
 			{
 				//Debug.Log(tile.TileLayer);
 				tileMap[tile.xPos][tile.yPos][tile.TileLayer] = tile;
 				tileMap[tile.xPos][tile.yPos][tile.TileLayer].ParentTileMap = this;
-				atmosphereMap[tile.xPos][tile.yPos].setDirty();
+
+				if (tile.HasAttribute<AttAirtight>())
+				{
+
+					atmosphereMap[tile.xPos][tile.yPos].SetAirtight(true);
+				}
+				else
+				{
+					atmosphereMap[tile.xPos][tile.yPos].setDirty();
+				}
+
 			}
 		}
 

@@ -76,10 +76,11 @@
     <Compile Include="Source\World\Ships\ShipBartox.cs" />
     <Compile Include="Source\World\Ships\ShipCalax.cs" />
     <Compile Include="Source\World\Tiles\Atmospherics\Atmosphere.cs" />
+    <Compile Include="Source\World\Tiles\Electricity\IElectricity.cs" />
+    <Compile Include="Source\World\Tiles\Electricity\Wire.cs" />
     <Compile Include="Source\World\Tiles\ITile.cs" />
     <Compile Include="Source\World\Tiles\Machinery\MachineOxyGen.cs" />
     <Compile Include="Source\World\Tiles\Machinery\IMachinery.cs" />
-    <Compile Include="Source\World\Tiles\Power\Electrical.cs" />
     <Compile Include="Source\World\Tiles\Tile.cs" />
     <Compile Include="Source\World\Tiles\TileMap.cs" />
     <Compile Include="Source\World\Tiles\TileSpace.cs" />

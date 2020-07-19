@@ -14,6 +14,7 @@ namespace StarScape.Source.World.Tiles
 	public class TileDoor : Tile
 	{
 		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture(null); } }
+		public override bool DoesTextureHaveTransparency { get { return true; } }
 
 		enum DoorType { BasicDoor }
 

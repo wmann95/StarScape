@@ -10,6 +10,7 @@ namespace StarScape.Source.World.Tiles
 	{
 
 		public override Texture2D TileTexture { get { return LoadHelper.LoadTexture("WallTile1"); } }
+		public override bool DoesTextureHaveTransparency { get { return false; } }
 
 		public TileWall(int x, int y) : base(x, y, 5)
 		{

@@ -24,9 +24,11 @@ namespace StarScape.Source.World.Ships
 			return "Calax";
 		}
 
+		int boxSize = 100;
+
 		public override TileMap CreateTileMap()
 		{
-			TileMap temp = new TileMap(20, 20);
+			TileMap temp = new TileMap(boxSize, boxSize);
 
 			GenerateShip(temp);
 
@@ -42,7 +44,7 @@ namespace StarScape.Source.World.Ships
 			int shipWidth = map.GetXSize();
 			int shipHeight = map.GetYSize();
 
-			int scale = 20;
+			int scale = boxSize;
 
 			BuildRoom(map, 0, 0, 1 * scale, 1 * scale);
 			//BuildRoom(map, 4 * scale, 3 * scale, 9 * scale, 4 * scale);
@@ -51,7 +53,11 @@ namespace StarScape.Source.World.Ships
 			//BuildRoom(map, 4 * scale, 6 * scale, 5 * scale, 4 * scale);
 			//BuildRoom(map, 8 * scale, 6 * scale, 5 * scale, 4 * scale);
 
-			//map.RemoveTile(19, 9, 5);
+
+			for (int i = 1; i < boxSize - 1; i++)
+			{
+				map.PlaceTile(new TileSpace(i, i), true);
+			}
 			//map.RemoveTile(19, 10, 5);
 
 
@@ -68,23 +74,12 @@ namespace StarScape.Source.World.Ships
 			timer = Time.gameTime - timer;
 
 
-			if (Time.gameTime - clock >= 3000 && flag)
+			if (Time.gameTime - clock >= 5000)
 			{
-
-				flag = false;
-
-				//Debug.Log(shipTilemap.GetTile(0, 0, 5));
-				
-				shipTilemap.RemoveAllTilesAt(9, 9);
-				shipTilemap.RemoveAllTilesAt(9, 10);
-				shipTilemap.RemoveAllTilesAt(10, 9);
-				shipTilemap.RemoveAllTilesAt(10, 10);
-
-				shipTilemap.PlaceTile(new MachineOxyGen(2, 2), false);
-				shipTilemap.PlaceTile(new MachineOxyGen(17, 2), false);
-				shipTilemap.PlaceTile(new MachineOxyGen(2, 17), false);
-				shipTilemap.PlaceTile(new MachineOxyGen(17, 17), false);
+				clock = Time.gameTime;
+				shipTilemap.DrawOptimizationTest = !shipTilemap.DrawOptimizationTest;
 			}
+
 
 			//Tile tile = shipTilemap.GetNeighborOfTile(shipTilemap.GetTile(10, 2), 0);
 			//Console.WriteLine(tile);
