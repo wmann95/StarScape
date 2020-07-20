@@ -12,6 +12,8 @@ namespace StarScape.Source.Rendering
 	/// </summary>
 	public class Camera2D
 	{
+		public readonly float MaxZoom = 0.1f;
+
 		private float zoom;
 		private float rotation;
 		private Vector2 position;
@@ -71,8 +73,8 @@ namespace StarScape.Source.Rendering
 			set
 			{
 				zoom = value;
-				if (zoom < 0.1f)
-					zoom = 0.1f;
+				if (zoom < MaxZoom)
+					zoom = MaxZoom;
 				isViewTransformationDirty = true;
 			}
 		}
@@ -129,6 +131,16 @@ namespace StarScape.Source.Rendering
 		public void RecalculateTransformationMatrices()
 		{
 			isViewTransformationDirty = true;
+		}
+
+
+		/// <summary>
+		/// Returns the current bounds of the camera. If the camera moves, the bound also moves, and this reflects that.
+		/// </summary>
+		/// <returns></returns>
+		public Vector2 GetCameraBounds()
+		{
+			return new Vector2(MainGame.screenWidth / Zoom, MainGame.screenHeight / Zoom) + Position;
 		}
 
 	}

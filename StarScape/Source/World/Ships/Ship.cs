@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StarScape.Source.Rendering;
 using StarScape.Source.World.Tiles;
 
 namespace StarScape.Source.World.Ships

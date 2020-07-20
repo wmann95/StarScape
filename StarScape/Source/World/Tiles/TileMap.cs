@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using StarScape.Source.Rendering;
 using StarScape.Source.World.Ships;
 using StarScape.Source.World.Tiles.Atmospherics;
 using StarScape.Source.World.Tiles.Attributes;
@@ -109,11 +110,13 @@ namespace StarScape.Source.World.Tiles
 
 		public int GetXSize()
 		{
+			//Debug.Log(tileMap.Length);
 			return tileMap.Length;
 		}
 
 		public int GetYSize()
 		{
+			//Debug.Log(tileMap[0].Length);
 			return tileMap[0].Length;
 		}
 
@@ -174,49 +177,57 @@ namespace StarScape.Source.World.Tiles
 		/// </summary>
 		public void Draw(SpriteBatch batch)
 		{
-			foreach (ITile[][] xIndex in tileMap)
+
+			if (true)
 			{
-				foreach (ITile[] yIndex in xIndex)
-				{
-					int[] layerArray = new int[MaxHeightOfTileMap];
-					int layersToRenderCount = 0;
 
-					for(int z = MaxHeightOfTileMap - 1; z >= 0; z--)
-					{
-						if (yIndex[z] == null) continue;
+				for(int x = 0; x < GetXSize(); x++) {
+					
+					for(int y = 0; y < GetYSize(); y++) {
 
-						if (yIndex[z].DoesTextureHaveTransparency)
+						float xPosition = x * 64 + Position.X; 
+						float yPosition = y + Position.Y;
+
+						//if (xPosition - World.GameCamera.Position.X <= -64 || yPosition - World.GameCamera.Position.Y <= -64) continue;
+						if (xPosition >= World.GameCamera.GetCameraBounds().X * 1.2)
 						{
-							layerArray[layersToRenderCount++] = z;
+							continue;
 						}
-						else
+						//if (yPosition - (World.GameCamera.GetCameraBounds().Y) >= 116 / World.GameCamera.Zoom) continue;
+
+						int[] layerArray = new int[MaxHeightOfTileMap];
+						int layersToRenderCount = 0;
+
+						for (int z = MaxHeightOfTileMap - 1; z >= 0; z--)
 						{
-							layerArray[layersToRenderCount++] = z;
-							break;
+							if (tileMap[x][y][z] == null) continue;
+
+							if (tileMap[x][y][z].DoesTextureHaveTransparency)
+							{
+								layerArray[layersToRenderCount++] = z;
+							}
+							else
+							{
+								layerArray[layersToRenderCount++] = z;
+								break;
+							}
 						}
-					}
 
-					for(int i = 0; i < layersToRenderCount; i++)
-					{
-						yIndex[layerArray[i]].Draw(batch);
-					}
+						for (int i = 0; i < layersToRenderCount; i++)
+						{
+							tileMap[x][y][layerArray[i]].Draw(batch);
+						}
+						
 
-					//foreach (ITile zIndex in yIndex)
-					//{
-					//	if (zIndex == null) continue;
-					//
-					//	zIndex.Draw(batch);
-					//}
+					}
 				}
 			}
 			
 			if (true)
 			{
-				foreach (Atmosphere[] aArray in atmosphereMap)
-				{
-					foreach (Atmosphere atmos in aArray)
-					{
-						float pressureColor = atmos.airPressure / Atmosphere.AtmosphericPressure;
+				for(int x = 0; x < atmosphereMap.Length; x++) {
+					for(int y = 0; y < atmosphereMap[0].Length; y++) {
+						float pressureColor = atmosphereMap[x][y].airPressure / Atmosphere.AtmosphericPressure;
 
 						Color color;// = new Color(255, 255, 255);
 						float opacity = 0.5f;
@@ -233,7 +244,7 @@ namespace StarScape.Source.World.Tiles
 
 						//if (atmos.isTileAtmosphereDirty) color = Color.Purple;
 
-						batch.Draw(AtmosphereTexture, new Vector2(atmos.xPos, atmos.yPos) * 64 + Position, color * opacity);
+						batch.Draw(AtmosphereTexture, new Vector2(atmosphereMap[x][y].xPos, atmosphereMap[x][y].yPos) * 64 + Position, color * opacity);
 					}
 				}
 			}

@@ -23,11 +23,11 @@ namespace StarScape
 
 		//The camera magic
 		ResolutionIndependentRenderer resolutionIndependentRenderer;
-		public static Camera2D cam;
+		Camera2D cam;
 
 		//hardcoded screen size that I can change to change the game window size at startup.
-		public static readonly int screenWidth = 800;
-		public static readonly int screenHeight = 600;
+		public static int screenWidth = 800;
+		public static int screenHeight = 600;
 		
 		/// <summary>
 		///Stuff in here is pretty standard, really just made it so the games content manager can be seen by outsiders through the contentManager static variable. 
@@ -55,15 +55,25 @@ namespace StarScape
         {
 			resolutionIndependentRenderer = new ResolutionIndependentRenderer(this);
 			cam = new Camera2D(resolutionIndependentRenderer);
-			cam.Zoom = 1/10f;
+			cam.Zoom = 1f;
 
-			world = new World();
+			//InitializeResolutionIndependence(screenWidth, screenHeight);
+
+			Window.AllowUserResizing = true;
+			Window.ClientSizeChanged += Window_ClientSizeChanged;
+
+			world = new World(ref cam);
 
 			this.IsMouseVisible = true;
 			
             base.Initialize();
         }
-		
+
+		private void Window_ClientSizeChanged(object sender, System.EventArgs e)
+		{
+			
+		}
+
 		/// <summary>
 		/// More camera magic.
 		/// </summary>
@@ -71,8 +81,8 @@ namespace StarScape
 		/// <param name="realScreenHeight"></param>
 		private void InitializeResolutionIndependence(int realScreenWidth, int realScreenHeight)
 		{
-			resolutionIndependentRenderer.virtualWidth = 1536;
-			resolutionIndependentRenderer.virtualHeight = 864;
+			resolutionIndependentRenderer.virtualWidth = 800;
+			resolutionIndependentRenderer.virtualHeight = 600;
 			resolutionIndependentRenderer.screenWidth = realScreenWidth;
 			resolutionIndependentRenderer.screenHeight = realScreenHeight;
 
@@ -112,7 +122,7 @@ namespace StarScape
 
 			//Call the worlds update method with the camera reference and the gametime parameters. The reference for the cam is necessary because
 			//I don't want to make the camera a publicly available thing, but do want to control it inside of the update loops.
-			world.Update(ref cam, gameTime);
+			world.Update(gameTime);
 
             base.Update(gameTime);
         }

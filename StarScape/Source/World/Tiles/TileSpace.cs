@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StarScape.Source.Rendering;
 using StarScape.Source.World.Tiles.Attributes;
 
 namespace StarScape.Source.World.Tiles

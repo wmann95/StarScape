@@ -17,10 +17,17 @@ namespace StarScape.Source.World
 		//List of all ships in the current world.
 		List<Ship> ships = new List<Ship>();
 
-		public World()
+		public static Camera2D GameCamera;
+
+		public World(ref Camera2D cam)
 		{
+			GameCamera = cam;
+
 			//ships.Add(new ShipBartox(new Vector2(0, 0)));
-			ships.Add(new ShipCalax(new Vector2(200f, 100f))); // make a new Calax ship at the specified point.
+			ships.Add(new ShipCalax(new Vector2(0, 0))); // make a new Calax ship at the specified point.
+
+
+			Debug.Log("Cam Position: " + GameCamera.Position + "  Cam Bounds: " + new Vector2(MainGame.screenWidth / GameCamera.Zoom, MainGame.screenHeight / GameCamera.Zoom) + " Camera Zoom: " + GameCamera.Zoom);
 		}
 		
 		/// <summary>
@@ -47,6 +54,8 @@ namespace StarScape.Source.World
 				//player.Load();
 			}
 			//batch.Draw(player.texture, new Vector2(player.xPos * 64, player.yPos * 64), Color.White);
+
+			
 		}
 
 		Vector2 mouseRightClickedPosition = new Vector2();
@@ -55,26 +64,25 @@ namespace StarScape.Source.World
 		/// <summary>
 		/// Go through all the ships and let them update.
 		/// </summary>
-		public void Update(ref Camera2D cam, GameTime gameTime)
+		public void Update(GameTime gameTime)
 		{
 			//Mouse.GetState();
 			//Keyboard.GetState();
-
 
 			//Zoom logic
 			if (Keyboard.WasKeyTyped(Keys.Z))
 			{
 				if (Keyboard.IsKeyPressed(Keys.LeftShift))
 				{
-					cam.Zoom *= 2;
-					cam.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom / 2));
+					GameCamera.Zoom *= 2;
+					GameCamera.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(GameCamera.Zoom / 2));
 				}
 				else
 				{
-					if (cam.Zoom > .1f)
+					if (GameCamera.Zoom > GameCamera.MaxZoom)
 					{
-						cam.Zoom /= 2;
-						cam.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(cam.Zoom * 2));
+						GameCamera.Zoom /= 2;
+						GameCamera.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(GameCamera.Zoom * 2));
 					}
 				}
 			}
@@ -83,7 +91,7 @@ namespace StarScape.Source.World
 			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))
 			{
 				mouseRightFlag = true;
-				mouseRightClickedPosition = cam.Position + Mouse.GetState().Position.ToVector2() / cam.Zoom;
+				mouseRightClickedPosition = GameCamera.Position + Mouse.GetState().Position.ToVector2() / GameCamera.Zoom;
 
 				Debug.Log("Mouse Clicked Position: " + mouseRightClickedPosition);
 			}
@@ -92,15 +100,15 @@ namespace StarScape.Source.World
 			{
 				if (mouseRightFlag)
 				{
-					cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
+					GameCamera.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / GameCamera.Zoom);
 				}
 			}
 
 			if (Mouse.MouseButtonUp(Mouse.MouseButton.Left))
 			{
-				Debug.Log("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
+				//Debug.Log("Mouse Released Position: " + Mouse.GetState().Position.ToVector2());
 				mouseRightFlag = false;
-				cam.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / cam.Zoom);
+				GameCamera.Position = (mouseRightClickedPosition - Mouse.GetState().Position.ToVector2() / GameCamera.Zoom);
 				
 			}
 			
@@ -108,6 +116,8 @@ namespace StarScape.Source.World
 			{
 				ship.Update(gameTime);
 			}
+
+			//Debug.Log(cam.Position);
 		}
 	}
 }

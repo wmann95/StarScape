@@ -109,6 +109,12 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 			{
 				float totalChange = 0; // the total air pressure change as summed from all neighbors.
 
+				if(airPressure <= 0.01f)
+				{
+					isTileAtmosphereDirty = false;
+					return;
+				}
+
 				//Check if the tile below is now space
 				if(ParentTileMap.GetTile(xPos, yPos, 0) != null){
 					if(ParentTileMap.GetTile(xPos, yPos, 0) is TileSpace)
@@ -138,14 +144,15 @@ namespace StarScape.Source.World.Tiles.Atmospherics
 					neighborAtmos.ChangePressure(DecayFactor * deltaP);
 					// lets the neighbor know it should recalculate things, as this tile has changed and is attached to it.
 						
-					neighborAtmos.setDirty();
+					//neighborAtmos.setDirty();
 
-					if (Math.Abs(deltaP) <= 0.01f) this.isTileAtmosphereDirty = false;
+					if (Math.Abs(deltaP) <= 0.1f) this.isTileAtmosphereDirty = false;
 				}
 
 				if (canChangePressure) {
 					ChangePressure(totalChange);
 				}
+
 				isTileAtmosphereDirty = false;
 			}
 
