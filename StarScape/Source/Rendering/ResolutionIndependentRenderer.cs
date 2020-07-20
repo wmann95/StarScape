@@ -33,11 +33,11 @@ namespace StarScape.Source.Rendering
 		{
 			game = mainGame;
 
-			virtualWidth = 1536;
-			virtualHeight = 864;
+			virtualWidth = 800;
+			virtualHeight = 600;
 
-			screenWidth = 1280;
-			screenHeight = 720;
+			screenWidth = 800;
+			screenHeight = 600;
 		}
 
 		public void Initialize()

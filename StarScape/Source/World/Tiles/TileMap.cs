@@ -186,13 +186,10 @@ namespace StarScape.Source.World.Tiles
 					for(int y = 0; y < GetYSize(); y++) {
 
 						float xPosition = x * 64 + Position.X; 
-						float yPosition = y + Position.Y;
+						float yPosition = y * 64 + Position.Y;
 
-						//if (xPosition - World.GameCamera.Position.X <= -64 || yPosition - World.GameCamera.Position.Y <= -64) continue;
-						if (xPosition >= World.GameCamera.GetCameraBounds().X * 1.2)
-						{
-							continue;
-						}
+						if (xPosition - World.GameCamera.Position.X <= -64 || yPosition - World.GameCamera.Position.Y <= -64) continue;
+						if (xPosition >= World.GameCamera.GetCameraBounds().X || yPosition >= World.GameCamera.GetCameraBounds().Y) continue;
 						//if (yPosition - (World.GameCamera.GetCameraBounds().Y) >= 116 / World.GameCamera.Zoom) continue;
 
 						int[] layerArray = new int[MaxHeightOfTileMap];
@@ -227,6 +224,13 @@ namespace StarScape.Source.World.Tiles
 			{
 				for(int x = 0; x < atmosphereMap.Length; x++) {
 					for(int y = 0; y < atmosphereMap[0].Length; y++) {
+						
+						float xPosition = x * 64 + Position.X;
+						float yPosition = y * 64 + Position.Y;
+
+						if (xPosition - World.GameCamera.Position.X <= -64 || yPosition - World.GameCamera.Position.Y <= -64) continue;
+						if (xPosition >= World.GameCamera.GetCameraBounds().X || yPosition >= World.GameCamera.GetCameraBounds().Y) continue;
+
 						float pressureColor = atmosphereMap[x][y].airPressure / Atmosphere.AtmosphericPressure;
 
 						Color color;// = new Color(255, 255, 255);
