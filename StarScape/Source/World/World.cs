@@ -74,15 +74,21 @@ namespace StarScape.Source.World
 			{
 				if (Keyboard.IsKeyPressed(Keys.LeftShift))
 				{
-					GameCamera.Zoom *= 2;
-					GameCamera.Position += (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(GameCamera.Zoom / 2));
+					Vector2 oldSize = GameCamera.GetCameraBounds() - GameCamera.Position;
+					GameCamera.Zoom *= 2f;
+					Vector2 newSize = GameCamera.GetCameraBounds() - GameCamera.Position;
+					//Debug.Log(oldSize - newSize);
+					GameCamera.Position += (oldSize - newSize) / 2;
 				}
 				else
 				{
 					if (GameCamera.Zoom > GameCamera.MaxZoom)
 					{
-						GameCamera.Zoom /= 2;
-						GameCamera.Position -= (new Vector2(MainGame.screenWidth, MainGame.screenHeight) / (float)Math.Exp(GameCamera.Zoom * 2));
+						Vector2 oldSize = GameCamera.GetCameraBounds() - GameCamera.Position;
+						GameCamera.Zoom /= 2f;
+						Vector2 newSize = GameCamera.GetCameraBounds() - GameCamera.Position;
+						//Debug.Log(oldSize - newSize);
+						GameCamera.Position += (oldSize - newSize) / 2;
 					}
 				}
 			}
