@@ -14,6 +14,7 @@ namespace StarScape
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+		
 
 		//Came in base Monogame project, without the public static and getter and setter.
 		public static ContentManager contentManager { get; private set; }

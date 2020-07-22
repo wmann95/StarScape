@@ -37,10 +37,10 @@ namespace StarScape.Source.World
 		/// <returns></returns>
 		public static bool WasKeyTyped(Keys key)
 		{
+			//GetState();
 			bool currStateFlag = currentState.IsKeyDown(key);
 			bool prevStateFlag = previousState.IsKeyDown(key);
 
-			GetState();
 			//Console.WriteLine(currStateFlag + " : " + !prevStateFlag);
 
 			return currStateFlag && !prevStateFlag;

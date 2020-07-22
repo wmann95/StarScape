@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,7 +80,7 @@ namespace StarScape.Source.World.Tiles
 		{
 			for(int i = 0; i < atmosphereMap.Length; i++)
 			{
-				for (int j = 0; j < atmosphereMap.Length; j++)
+				for (int j = 0; j < atmosphereMap[0].Length; j++)
 				{
 					atmosphereMap[i][j].setDirty();
 				}
@@ -210,8 +211,10 @@ namespace StarScape.Source.World.Tiles
 							}
 						}
 
-						for (int i = 0; i < layersToRenderCount; i++)
+						for (int i = layersToRenderCount - 1; i >= 0; i--)
 						{
+
+
 							tileMap[x][y][layerArray[i]].Draw(batch);
 						}
 						
@@ -220,7 +223,7 @@ namespace StarScape.Source.World.Tiles
 				}
 			}
 			
-			if (true)
+			if (false)
 			{
 				for(int x = 0; x < atmosphereMap.Length; x++) {
 					for(int y = 0; y < atmosphereMap[0].Length; y++) {
@@ -254,12 +257,19 @@ namespace StarScape.Source.World.Tiles
 			}
 		}
 
+		long updateClock = 0;
+
+		Stopwatch watch = new Stopwatch();
+
 		/// <summary>
 		/// This method is called during the update loop.
 		/// </summary>
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
+			watch.Reset();
+			watch.Start();
+
 			foreach (ITile[][] xIndex in tileMap)
 			{
 				foreach (ITile[] yIndex in xIndex)
@@ -279,8 +289,15 @@ namespace StarScape.Source.World.Tiles
 					atmos.Update(gameTime);
 				}
 			}
-		}
 
+			watch.Stop();
+			if(Time.gameTime - updateClock >= 500)
+			{
+				updateClock = 0;
+				//Debug.Log(watch.Elapsed);
+			}
+		}
+		
 		/// <summary>
 		/// set the given tile to null, which, for the intents and purposes of the air pressure and other mechanics, acts as a "space" tile. (removes any air rapidly.)
 		/// </summary>
@@ -299,7 +316,7 @@ namespace StarScape.Source.World.Tiles
 
 			tileMap[x][y][z] = null;
 
-			//atmosphereMap[x][y].setDirty();
+			atmosphereMap[x][y].setDirty();
 		}
 
 		public void RemoveAllTilesAt(int x, int y)
@@ -312,7 +329,7 @@ namespace StarScape.Source.World.Tiles
 			//SetAtmospheresDirty();
 		}
 		
-		public void PlaceTile(ITile tile, bool replaceIfNeeded)
+		public void PlaceTile(ITile tile, bool replaceIfNeeded = false)
 		{
 			if (tile == null) throw new ArgumentException("Tile Cannot Be Null");
 			if (tile is TileSpace) RemoveAllTilesAt(tile.xPos, tile.yPos);

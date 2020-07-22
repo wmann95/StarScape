@@ -76,6 +76,7 @@
     <Compile Include="Source\World\Ships\ShipBartox.cs" />
     <Compile Include="Source\World\Ships\ShipCalax.cs" />
     <Compile Include="Source\World\Tiles\Atmospherics\Atmosphere.cs" />
+    <Compile Include="Source\World\Tiles\Attributes\AttConductive.cs" />
     <Compile Include="Source\World\Tiles\Electricity\IElectricity.cs" />
     <Compile Include="Source\World\Tiles\Electricity\Wire.cs" />
     <Compile Include="Source\World\Tiles\ITile.cs" />

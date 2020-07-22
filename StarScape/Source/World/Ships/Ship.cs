@@ -82,7 +82,7 @@ namespace StarScape.Source.World.Ships
 		/// <param name="yPos"></param>
 		/// <param name="xSize"></param>
 		/// <param name="ySize"></param>
-		public static void BuildRoom(TileMap tileMap, int xPos, int yPos, int xSize, int ySize)
+		public static void BuildRoom(TileMap tileMap, int xPos, int yPos, int xSize, int ySize, bool floored = true)
 		{
 
 			TileMap buffer = new TileMap(xSize, ySize);
@@ -103,7 +103,8 @@ namespace StarScape.Source.World.Ships
 					else
 					{
 						//Tile.AddTop(new TopFloor(), ref buffer[i][j]); //Tile isn't a perimeter tile, add a floor.
-						buffer.PlaceTile(new TileFloor(i, j), true);
+						if(floored == true)
+							buffer.PlaceTile(new TileFloor(i, j), true);
 					}
 				}
 			}

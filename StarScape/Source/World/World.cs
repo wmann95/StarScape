@@ -66,7 +66,7 @@ namespace StarScape.Source.World
 		/// </summary>
 		public void Update(GameTime gameTime)
 		{
-			//Mouse.GetState();
+			Mouse.GetState();
 			//Keyboard.GetState();
 
 			//Zoom logic
@@ -75,9 +75,8 @@ namespace StarScape.Source.World
 				if (Keyboard.IsKeyPressed(Keys.LeftShift))
 				{
 					Vector2 oldSize = GameCamera.GetCameraBounds() - GameCamera.Position;
-					GameCamera.Zoom *= 2f;
+					GameCamera.Zoom *= 1.5f;
 					Vector2 newSize = GameCamera.GetCameraBounds() - GameCamera.Position;
-					//Debug.Log(oldSize - newSize);
 					GameCamera.Position += (oldSize - newSize) / 2;
 				}
 				else
@@ -85,13 +84,15 @@ namespace StarScape.Source.World
 					if (GameCamera.Zoom > GameCamera.MaxZoom)
 					{
 						Vector2 oldSize = GameCamera.GetCameraBounds() - GameCamera.Position;
-						GameCamera.Zoom /= 2f;
+						GameCamera.Zoom /= 1.5f;
 						Vector2 newSize = GameCamera.GetCameraBounds() - GameCamera.Position;
 						//Debug.Log(oldSize - newSize);
 						GameCamera.Position += (oldSize - newSize) / 2;
 					}
 				}
+				Debug.Log("Camera zoom: " + GameCamera.Zoom);
 			}
+			
 
 			//Camera drag movement.
 			if (Mouse.MouseButtonDown(Mouse.MouseButton.Left))

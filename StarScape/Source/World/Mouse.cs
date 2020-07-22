@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace StarScape.Source.World
@@ -33,7 +34,6 @@ namespace StarScape.Source.World
 		/// <returns></returns>
 		public static bool IsButtonPressed(MouseButton button)
 		{
-			GetState();
 			switch (button) //I chose to go with a switch statement instead of an if statement list because, from what I understand, switch statements are usually faster and more efficient.
 			{
 				case MouseButton.Left:
@@ -139,8 +139,131 @@ namespace StarScape.Source.World
 					return false;
 				}
 			}
-			
+
 			return !currStateFlag && prevStateFlag;
+		}
+
+		static bool LeftMouseButtonClickedFlag = false;
+		static bool MiddleMouseButtonClickedFlag = false;
+		static bool RightMouseButtonClickedFlag = false;
+
+		static bool IsMouseClickFlagged(MouseButton button)
+		{
+			switch (button) //I chose to go with a switch statement instead of an if statement list because, from what I understand, switch statements are usually faster and more efficient.
+			{
+				case MouseButton.Left:
+				{
+					return LeftMouseButtonClickedFlag;
+				}
+				case MouseButton.Middle:
+				{
+					return MiddleMouseButtonClickedFlag;
+				}
+				case MouseButton.Right:
+				{
+					return RightMouseButtonClickedFlag;
+				}
+				default:
+				{
+					return false;
+				}
+			}
+		}
+
+		//how long it should be looking for the mouse up.
+		static readonly int MaxClickTime = 200;
+		static long LeftClickClock = 0;
+		static long MiddleClickClock = 0;
+		static long RightClickClock = 0;
+
+		public static bool WasMouseButtonClicked(MouseButton button)
+		{
+			if (MouseButtonDown(button) && !IsMouseClickFlagged(button))
+			{
+				switch (button)
+				{
+					case MouseButton.Left:
+					{
+						LeftMouseButtonClickedFlag = true;
+						LeftClickClock = Time.gameTime;
+						break;
+					}
+					case MouseButton.Middle:
+					{
+						MiddleMouseButtonClickedFlag = true;
+						MiddleClickClock = Time.gameTime;
+						break;
+					}
+					case MouseButton.Right:
+					{
+						RightMouseButtonClickedFlag = true;
+						RightClickClock = Time.gameTime;
+						break;
+					}
+				}
+			}
+
+			if (MouseButtonUp(button) && IsMouseClickFlagged(button))
+			{
+				switch (button)
+				{
+					case MouseButton.Left:
+					{
+						LeftMouseButtonClickedFlag = false;
+
+						if (Time.gameTime - LeftClickClock <= MaxClickTime)
+						{
+							return true;
+						}
+
+						break;
+					}
+					case MouseButton.Middle:
+					{
+						MiddleMouseButtonClickedFlag = false;
+
+						if (Time.gameTime - MiddleClickClock <= MaxClickTime)
+						{
+							return true;
+						}
+
+						break;
+					}
+					case MouseButton.Right:
+					{
+						RightMouseButtonClickedFlag = false;
+
+						if (Time.gameTime - RightClickClock <= MaxClickTime)
+						{
+							return true;
+						}
+
+						break;
+					}
+				}
+			}
+
+
+
+			return false;
+		}
+		
+		public static bool IsMouseInRect(Rectangle rect)
+		{
+			Point mousePos = currentState.Position;
+			rect.X -= (int)(World.GameCamera.Position.X);
+			rect.Y -= (int)(World.GameCamera.Position.Y);
+			rect.X = (int)(rect.X * World.GameCamera.Zoom);
+			rect.Y = (int)(rect.Y * World.GameCamera.Zoom);
+
+			rect.Width = (int)(rect.Width * World.GameCamera.Zoom);
+			rect.Height = (int)(rect.Height * World.GameCamera.Zoom);
+
+			Debug.Log(mousePos + " : " + rect);
+
+			if (mousePos.X >= rect.X && mousePos.X <= rect.X +  rect.Width && mousePos.Y >= rect.Y && mousePos.Y <= rect.Y + rect.Height) return true;
+
+			return false;
 		}
 
 	}
