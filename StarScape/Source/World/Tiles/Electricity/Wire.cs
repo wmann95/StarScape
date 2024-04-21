@@ -13,6 +13,9 @@ namespace StarScape.Source.World.Tiles.Electricity
 
 	public class Wire : Tile, IElectricity
 	{
+
+		public override int Layer { get { return 2; } }
+
 		static Texture2D wireTextureAtlas = LoadHelper.LoadTexture("ElectricalCableGrid");
 		static Rectangle[][] atlasRectReference;
 		static int atlasColumnCount = 4;
@@ -48,11 +51,9 @@ namespace StarScape.Source.World.Tiles.Electricity
 
 		private int wireState = 0;
 
-		public Wire(int xPos, int yPos, int state) : base(xPos, yPos, 3)
+		public Wire(int state)
 		{
 			wireState = state;
-			
-			//Debug.Log(GetWireTextureRect());
 		}
 
 		Rectangle GetWireTextureRect()
@@ -63,23 +64,22 @@ namespace StarScape.Source.World.Tiles.Electricity
 			return new Rectangle((int)Math.Round((float)(x * 64)), y * 64, textureSize, textureSize);
 		}
 
-		public override void Draw(SpriteBatch batch)
-		{
-			destinationRect = new Rectangle((int)(xPos * 64 + ParentTileMap.Position.X), (int)(yPos * 64 + ParentTileMap.Position.Y), 64, 64);
-			//base.Draw(batch);
-			batch.Draw(TileTexture, destinationRect/*(new Vector2(xPos, yPos) * 64 each tile texture is 64px wide.) + ParentTileMap.Position*/, GetWireTextureRect(), Color.White);
-		}
+		//public override void Draw(SpriteBatch batch)
+		//{
+		//	destinationRect = new Rectangle((int)(xPos * 64 + ParentTileMap.Position.X), (int)(yPos * 64 + ParentTileMap.Position.Y), 64, 64);
+		//	batch.Draw(TileTexture, destinationRect, GetWireTextureRect(), Color.White);
+		//}
 		
-		public override void Update(GameTime gameTime)
-		{
-			destinationRect = new Rectangle((int)(xPos * 64 + ParentTileMap.Position.X), (int)(yPos * 64 + ParentTileMap.Position.Y), 64, 64);
+		//public override void Update(GameTime gameTime)
+		//{
+		//	destinationRect = new Rectangle((int)(xPos * 64 + ParentTileMap.Position.X), (int)(yPos * 64 + ParentTileMap.Position.Y), 64, 64);
 
 
-			if (Mouse.WasMouseButtonClicked(Mouse.MouseButton.Right) && Mouse.IsMouseInRect(destinationRect))//Mouse.WasMouseButtonClicked(Mouse.MouseButton.Right))
-			{
-				wireState++;
-			}
-		}
+		//	if (Mouse.WasMouseButtonClicked(Mouse.MouseButton.Right) && Mouse.IsMouseInRect(destinationRect))
+		//	{
+		//		wireState++;
+		//	}
+		//}
 
 		int[] GetConnectedNeighbors()
 		{

@@ -12,10 +12,11 @@ namespace StarScape.Source.World.Tiles.Attributes
 	/// </summary>
 	public interface IAttributable
 	{
-		List<IAttribute> Attributes { get; }
+		public HashSet<IAttribute> Attributes { get; }
 
-		IAttribute GetAttribute<IAttribute>();
-		bool HasAttribute<IAttribute>();
-		void AddAttribute<IAttribute>(IAttribute attribute);
+		public void AddAttributes(IAttribute[] attributes)
+		{
+			Attributes.UnionWith(attributes);
+		}
 	}
 }

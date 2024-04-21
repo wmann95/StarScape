@@ -1,10 +1,3 @@
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\AtmosphereOverlay.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\CharacterTest.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\ElectricalCableGrid.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\FloorTile1.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\HullTile1.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\UndefinedTexture.xnb
-E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\WallTile1.xnb
 E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\StarScape.exe
 E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\StarScape.deps.json
 E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\StarScape.runtimeconfig.json
@@ -30,3 +23,11 @@ E:\Code Projects\CSharp\StarScape\StarScape\obj\Debug\net6.0\refint\StarScape.dl
 E:\Code Projects\CSharp\StarScape\StarScape\obj\Debug\net6.0\StarScape.pdb
 E:\Code Projects\CSharp\StarScape\StarScape\obj\Debug\net6.0\StarScape.genruntimeconfig.cache
 E:\Code Projects\CSharp\StarScape\StarScape\obj\Debug\net6.0\ref\StarScape.dll
+E:\Code Projects\CSharp\StarScape\StarScape\obj\Debug\net6.0\StarScape.sourcelink.json
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\AtmosphereOverlay.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\CharacterTest.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\ElectricalCableGrid.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\FloorTile1.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\HullTile1.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\UndefinedTexture.xnb
+E:\Code Projects\CSharp\StarScape\StarScape\bin\Debug\net6.0\Content\textures\WallTile1.xnb

@@ -4,13 +4,13 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/AtmosphereOverlay.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/CharacterTest.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/ElectricalCableGrid.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/FloorTile1.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/HullTile1.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/UndefinedTexture.png</File>
-    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/WallTile1.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/AtmosphereOverlay.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/CharacterTest.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/ElectricalCableGrid.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/FloorTile1.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/HullTile1.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/UndefinedTexture.png</File>
+    <File>E:/Code Projects/CSharp/StarScape/StarScape/Content/textures/WallTile1.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

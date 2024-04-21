@@ -1,15 +1,11 @@
 ﻿using System;
 
+using StarScape.Source.World.Tiles;
+
 namespace StarScape
 {
-    /// <summary>
-    /// The main class.
-    /// </summary>
     public static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [MTAThread]
         static void Main()
         {

@@ -10,6 +10,6 @@ namespace StarScape.Source.World
 {
 	public interface IDrawable
 	{
-		void Draw(SpriteBatch batch);
+		Texture2D TileTexture { get; }
 	}
 }

@@ -13,14 +13,11 @@ namespace StarScape.Source
 	public static class Debug
 	{
 
-		public static void Log<T>(T t, bool flag)
-		{
-			if (flag) Console.WriteLine(t.ToString());
-		}
+		static bool enabled = true;
 
-		public static void Log<T>(T t)
+		public static void Log<T>(T t, bool shouldLog = true)
 		{
-			Console.WriteLine( t.ToString() );
+			if (enabled && shouldLog) System.Diagnostics.Debug.WriteLine(t.ToString());
 		}
 
 	}
