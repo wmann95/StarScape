@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StarScape")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86bc7029588612e0363d0007dd926f9b1909d5f0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95f81e10c480adc54a94c1ef0fb6cc7291df8eba")]
 [assembly: System.Reflection.AssemblyProductAttribute("StarScape")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StarScape")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

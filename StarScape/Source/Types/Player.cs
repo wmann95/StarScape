@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using StarScape.Source.Input;
 using StarScape.Source.Rendering;
 
-namespace StarScape.Source.World
+using Keyboard = StarScape.Source.Input.Keyboard;
+
+namespace StarScape.Source.Types
 {
 
-	/// <summary>
-	/// This class is a sort of placeholder. I just wanted something that I could use to test the keyboard inputs a while back.
-	/// </summary>
-	public class Player
+    /// <summary>
+    /// This class is a sort of placeholder. I just wanted something that I could use to test the keyboard inputs a while back.
+    /// </summary>
+    public class Player
 	{
 
 		

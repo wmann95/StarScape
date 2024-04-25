@@ -1,0 +1,26 @@
+[
+    {
+        "class": "Tile",
+        "id": "floor1",
+        "name" : "Floor",
+        "desc" : "A floor",
+        "texture" : "FloorTile1",
+        "layer" : "Floor"
+    },
+    {
+        "class": "Tile",
+        "id": "hull1",
+        "name" : "Hull",
+        "desc" : "A floor",
+        "texture" : "HullTile1",
+        "layer" : "Hull"
+    },
+    {
+        "class": "Tile",
+        "id": "wall1",
+        "name" : "Wall",
+        "desc" : "A floor",
+        "texture" : "WallTile1",
+        "layer" : "Room"
+    }
+]

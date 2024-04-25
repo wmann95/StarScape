@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using StarScape.Source.World.Tiles;
-using StarScape.Source.World.Tiles.Electricity;
-using StarScape.Source.World.Tiles.Machinery;
 
 namespace StarScape.Source.World.Ships
 {

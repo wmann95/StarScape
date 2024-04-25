@@ -1,0 +1,8 @@
+[
+    {
+        "class": "Attribute",
+        "id": "IsAirtight",
+        "name": "Airtight",
+        "description": "This object is able to hold atmosphere."
+    }
+]

@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": ["class", "id"],
+        "properties": {
+            "class" : {
+                "type": "string",
+                "description": "The class this game object is created from.",
+                "default": "GameObject"
+            },
+            "id" : {
+                "type": "string",
+                "description": "The unique identifier for this game object."
+            },
+            "name" : {
+                "type": "string",
+                "description": "The image to load as the main sprite for the item."
+            },
+            "desc" : {
+                "type": "string",
+                "description": "The image to load as the normal texture for the item. \n(Should look weird and blue. Most filenames in base game end with \"n\")"
+            },
+            "texture" : {
+                "type": "string",
+                "description": "The path to the texture in Content/textures this object will use.",
+                "default": "unknown"
+            },
+            "max_damage" : {
+                "type": "number",
+                "description": "Defines how much damage this object can take before being destroyed."
+            }
+        }
+    }
+}

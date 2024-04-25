@@ -7,16 +7,22 @@ using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
+using StarScape.Source.EventSystem.Events;
 using StarScape.Source.Rendering;
-using StarScape.Source.World.Tiles;
+using StarScape.Source.TileSystem;
+using StarScape.Source.Types;
+using StarScape.Source.Types.Rooms;
 
 namespace StarScape.Source.World.Ships
 {
-	/// <summary>
-	/// Blueprint for all Ship classes.
-	/// </summary>
-	public abstract class Ship : IUpdatable
+    /// <summary>
+    /// Blueprint for all Ship classes.
+    /// </summary>
+    public abstract class Ship : IUpdatable
 	{
+		public event EventHandler<ShipEvent> OnShipChanged;
+
 		public TileMap tilemap = new TileMap();
 
 		public Vector2 Position;
@@ -27,6 +33,7 @@ namespace StarScape.Source.World.Ships
 		{
 			CreateTileMap();
 			Position = pos;
+			OnShipChanged += Room.OnTilePlaced;
 		}
 
 		public new string ToString()
@@ -64,9 +71,11 @@ namespace StarScape.Source.World.Ships
 		{
 			int x = (int)MathF.Round(position.X);
 			int y = (int)MathF.Round(position.Y);
-			int z = tile.Layer;
+			TileLayer z = tile.layer;
 
 			tilemap[x, y, z] = tile;
 		}
+
+
 	}
 }

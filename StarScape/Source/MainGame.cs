@@ -1,32 +1,36 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StarScape.Source;
+using StarScape.Source.GameState;
+using StarScape.Source.JSON;
 using StarScape.Source.Rendering;
 using StarScape.Source.World;
-using Keyboard = StarScape.Source.World.Keyboard;
+
+using Keyboard = StarScape.Source.Input.Keyboard;
 using Mouse = StarScape.Source.Input.Mouse;
 
 namespace StarScape
 {
     public class MainGame : Game
-    {
-        public static GraphicsDeviceManager graphics { get; private set; }
-        SpriteBatch spriteBatch;
-		public static Mouse MouseManager = new Mouse();
-		
-		ShipBuildState world;
-
-		ResolutionIndependentRenderer resolutionIndependentRenderer;
-
-		Camera2D cam;
-
+	{
 		static Camera2D activeCamera;
-		public static Camera2D ActiveCamera { get { return activeCamera; } }
 
 		public static int screenWidth = 800;
 		public static int screenHeight = 600;
+		public static Mouse MouseManager = new Mouse();
+
+        public static GraphicsDeviceManager graphics { get; private set; }
+		public static Camera2D ActiveCamera { get { return activeCamera; } }
+
+		Camera2D cam;
+		ResolutionIndependentRenderer resolutionIndependentRenderer;
+		SpriteBatch spriteBatch;
+		GameState state;
+
 		
 		public MainGame()
         {
@@ -39,7 +43,7 @@ namespace StarScape
             Content.RootDirectory = "Content";
 
 
-			LoadHelper.contentManager = this.Content;
+			LoadHelper.Content = this.Content;
 			
         }
 
@@ -56,7 +60,7 @@ namespace StarScape
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += Window_ClientSizeChanged;
 
-			world = new ShipBuildState();
+			state = new ShipBuildState();
 
 			this.IsMouseVisible = true;
 			
@@ -82,6 +86,9 @@ namespace StarScape
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+			JsonHandler.LoadData("installables/tile.json");
+
+			GameObjects.PrintRegistered();
         }
 
         protected override void UnloadContent() { }
@@ -95,7 +102,7 @@ namespace StarScape
 
 			MouseManager.Update();
 
-			world.Update(gameTime);
+			state.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -106,7 +113,7 @@ namespace StarScape
 
 			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, null, ActiveCamera.GetViewTransformationMatrix());
 
-			world.Draw(spriteBatch);
+			state.Draw(spriteBatch);
 
 			spriteBatch.End();
 

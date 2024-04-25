@@ -1,6 +1,5 @@
 ﻿using System;
 
-using StarScape.Source.World.Tiles;
 
 namespace StarScape
 {

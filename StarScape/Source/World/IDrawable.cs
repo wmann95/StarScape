@@ -10,6 +10,5 @@ namespace StarScape.Source.World
 {
 	public interface IDrawable
 	{
-		Texture2D TileTexture { get; }
 	}
 }

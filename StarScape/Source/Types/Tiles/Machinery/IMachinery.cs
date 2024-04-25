@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarScape.Source.World.Tiles.Machinery
+namespace StarScape.Source.Types.Tiles.Machinery
 {
-	interface IMachinery : ITile
+	interface IMachinery
 	{
 		bool IsMachineOn { get; }
 		
